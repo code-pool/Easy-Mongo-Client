@@ -1,12 +1,16 @@
 'use strict';
 
 angular
- .module('dashboard')
- .controller('DashboardCtrl', ['$scope', '$state','databases','socket','_','$mdBottomSheet', DashboardCtrl])
-.controller('GridBottomSheetCtrl', ['$scope','$mdBottomSheet',GridBottomSheetCtrl]);
-function DashboardCtrl($scope, $state, databases,socket,_,$mdBottomSheet) {
-  $scope.databases = databases;
+.module('dashboard')
+.controller('DashboardCtrl', ['$scope', '$state','databases','socket', DashboardCtrl]);
+
+
+
+function DashboardCtrl($scope, $mdDialog, databases,socket) {
+
   socket.reqDbInfo();
+  $scope.databases = databases;
+
   $scope.toggleDbSelect = function(db) {
     db.selected = !db.selected;
   };
@@ -16,31 +20,29 @@ function DashboardCtrl($scope, $state, databases,socket,_,$mdBottomSheet) {
     data.size = parseInt(data.size) + ' mb';
     $scope.databases[index].stats = data;
   });
-
-  $scope.showGridBottomSheet = function(db) {
-    db.selected = true;
-    $scope.alert = '';
-    $mdBottomSheet.show({
-      templateUrl: 'app/modules/dashboard/templates/actions.view.html',
-      controller: 'GridBottomSheetCtrl',
-      clickOutsideToClose: true
-    }).then(function(clickedItem) {
-      db.selected = false;
-    },function(){
-      db.selected = false;
+  
+  $scope.showDailogForDb = function(ev) {
+    
+    $mdDialog.show({
+      controller: SaveDatabaseCtrl,
+      templateUrl: 'app/modules/dashboard/templates/createdb.view.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose:true
     });
+
   }
 }
 
-function GridBottomSheetCtrl($scope, $mdBottomSheet) {
+function SaveDatabaseCtrl($scope, $mdDialog) {
 
-  $scope.items = [
-    { name: 'Delete', icon: 'delete' },
-    {name: 'Rename  ', icon:'mode_edit'}
-  ];
-
-  $scope.listItemClick = function($index) {
-    var clickedItem = $scope.items[$index];
-    $mdBottomSheet.hide(clickedItem);
+  $scope.cancel = function() {
+    $mdDialog.cancel();
   };
+
+  $scope.save = function() {
+    console.log($scope.dbname);
+    $mdDialog.hide();
+  }
+
 }
