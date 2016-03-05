@@ -1,12 +1,12 @@
 'use strict';
 
 angular
-.module('dashboard')
-.controller('DashboardCtrl', ['$scope', '$mdDialog','$state','databases','socket', DashboardCtrl]);
+ .module('dashboard')
+ .controller('DashboardCtrl', ['$scope', '$mdDialog','databases','socket', DashboardCtrl])
+ .controller('SaveDatabaseCtrl', ['$scope', '$mdDialog', 'toaster', SaveDatabaseCtrl]);
 
 
-
-function DashboardCtrl($scope, $mdDialog,$state, databases,socket) {
+function DashboardCtrl($scope, $mdDialog, databases,socket) {
 
   socket.reqDbInfo();
   $scope.databases = databases;
@@ -34,15 +34,23 @@ function DashboardCtrl($scope, $mdDialog,$state, databases,socket) {
   }
 }
 
-function SaveDatabaseCtrl($scope, $mdDialog) {
+function SaveDatabaseCtrl($scope, $mdDialog, toaster) {
 
   $scope.cancel = function() {
     $mdDialog.cancel();
   };
 
   $scope.save = function() {
-    console.log($scope.dbname);
     $mdDialog.hide();
+    $scope.successPopup();
   }
+
+  $scope.successPopup = function(){
+    toaster.pop({
+      type: 'success',
+      title: 'Congrats',
+      body: 'Database has been created',
+    });
+  };
 
 }
