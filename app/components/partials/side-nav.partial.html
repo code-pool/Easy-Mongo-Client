@@ -1,20 +1,31 @@
-<div style="top:30px; right:30px; position:fixed">
-  <md-button class="md-fab md-primary" aria-label="Menu" ng-click="toggleRight()" ng-hide="isOpenRight()">
-    <md-icon md-font-library="material-icons">reorder</md-icon>
-  </md-button>
+<div ng-hide="hide">
+  <div style="top:30px; right:30px; position:fixed">
+    <md-button class="md-fab md-primary" aria-label="Menu" ng-click="toggleRight()" ng-hide="isOpenRight()">
+      <md-icon md-font-library="material-icons">reorder</md-icon>
+    </md-button>
+  </div>
+
+  <section layout="row" flex>
+    <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
+
+      <md-toolbar class="md-toolbar-tool">
+        <md-button ui-sref="dashboard" class="md-raised md-primary">Home</md-button>
+        <md-button ui-sref="login"class="md-raised md-primary">Log out</md-button>
+      </md-toolbar>
+      
+      <md-content layout-padding>
+      <md-list>
+        <md-list-item class="md-3-line" ng-repeat="notf in notifications">
+          <div class="md-list-item-text" layout="column" layout-align="space-around">
+            <div layout="row">
+              <h4>{{notf.message}}}</h4>
+              <md-progress-circular class="md-hue-2" md-diameter="30px"></md-progress-circular>
+            </div>
+          </div>
+        </md-list-item>
+      </md-list>
+      </md-content>
+       
+    </md-sidenav>
+  </section>
 </div>
-
-<section layout="row" flex>
-  <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
-
-    <md-toolbar class="md-toolbar-tool">
-      <md-button ui-sref="dashboard" class="md-raised md-primary">Home</md-button>
-      <md-button ui-sref="login"class="md-raised md-primary">Log out</md-button>
-    </md-toolbar>
-    
-    <md-content layout-padding>
-    
-    </md-content>
-     
-  </md-sidenav>
-</section>
