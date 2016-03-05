@@ -12,24 +12,25 @@
 
 <section layout="row" flex>
   <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
-    
-    <md-toolbar class="md-theme-light">
-      <md-button class="" aria-label="Home">
-        <md-icon md-font-library="material-icons">home</md-icon>
+<!--     <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+      <md-button class="md-raised">Button</md-button>
+      <md-button class="md-raised md-primary">Primary</md-button>
+      <md-button ng-disabled="true" class="md-raised md-primary">Disabled</md-button>
+      <md-button class="md-raised md-warn">Warn</md-button>
+      <div class="label">Raised</div>
+    </section> -->
+    <md-toolbar class="md-toolbar-tool">
+    <md-button ui-sref="dashboard" class="md-raised md-primary">Home</md-button>
+    <md-button ui-sref="login"class="md-raised md-primary">Log out</md-button>
+<!--       <md-button class="md-fab" aria-label="Eat cake">
+          <md-icon md-font-library="material-icons">add</md-icon>
       </md-button>
+      <md-button class="md-fab" aria-label="Eat cake">
+          <md-icon md-font-library="material-icons">add</md-icon>
+      </md-button> -->
     </md-toolbar>
     
     <md-content layout-padding>
-      <md-button ng-click="close()" class="md-primary">
-        Close Sidenav Right
-      </md-button>
-      <form>
-        <md-input-container>
-          <label for="testInput">Test input</label>
-          <input type="text" id="testInput"
-                 ng-model="data" md-autofocus>
-        </md-input-container>
-      </form>
     </md-content>
      
   </md-sidenav>
