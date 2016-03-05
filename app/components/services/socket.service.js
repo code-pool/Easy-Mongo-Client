@@ -29,6 +29,10 @@ function socketFactory(config,storageService,$rootScope) {
       $rootScope.$broadcast('db-info',data);
     });
 
+    connection.on('collection-info',function(data){
+      $rootScope.$broadcast('collection-info',data);
+    });
+
     connection.on('db-create',function(data){
       $rootScope.$broadcast('db-create',data);
     });

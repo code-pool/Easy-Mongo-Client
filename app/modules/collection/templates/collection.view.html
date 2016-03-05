@@ -1,0 +1,52 @@
+<div style="height:100px;"></div>
+<md-content class="md-padding">
+    
+  <div class="col-sm-4 col-lg-4" ng-repeat="col in collections">
+
+    <div class="panel panel-default bootcards-summary">
+
+      <div class="panel-heading">
+        <h3 class="panel-title">{{col.collection_name}}</h3>
+      </div>
+
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <div class="bootcards-summary-item" href="/contacts" data-pjax="#main"
+            data-title="Contacts" style="padding-top:35px;">
+              <i class="fa fa-3x fa-users"></i>
+              <h4>
+                {{col.stats.count}} documents
+              </h4>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <div class="bootcards-summary-item" href="/notes" data-pjax="#main"
+            data-title="Notes" style="padding-top:35px;">
+              <i class="fa fa-3x fa-clipboard"></i>
+              <h4 ng-show="col.stats.verified">
+                Verified
+              </h4>
+              <h4 ng-hide="col.stats.verified">
+                Not Verified
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-footer">
+      <md-button class="md-fab md-warn md-raised md-hue-2 md-mini" ng-click="deleteCol(col.collection_name)" aria-label="Delete">
+          <md-icon>delete</md-icon>
+      </md-button>
+      <md-button class="md-fab md-primary md-mini" aria-label="Edit">
+          <md-icon>mode_edit</md-icon>
+      </md-button>
+      </div>  
+
+    </div>
+
+  </div>
+</md-content>
+
+<add-action call-ctrl-method="deleteCollection()"></add-action>

@@ -7,8 +7,8 @@ angular
  function stateProvider($stateProvider) {
 
 	$stateProvider
-		.state('dashboard', {
-			url : '/dashboard',
+		.state('home', {
+			url : '/home',
 			views : {
 				'@' : {
 					controller : 'DashboardCtrl',
