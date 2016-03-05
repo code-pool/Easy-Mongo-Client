@@ -1,0 +1,28 @@
+<md-dialog aria-label="Mango (Fruit)"  ng-cloak>
+  <form name="dbForm" ng-submit="save()">
+    
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h5>Create Database</h5>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-font-library="material-icons">clear</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <br>
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Enter Database Name</label>
+        <input ng-model="dbname">
+      </md-input-container>
+    </md-dialog-content>
+    
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button class="md-raised md-primary" type="submit">Save</md-button>
+    </md-dialog-actions>
+
+  </form>
+</md-dialog>
