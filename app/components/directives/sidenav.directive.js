@@ -13,16 +13,6 @@ function SideNav($mdSidenav) {
 
     function linkFunc($scope, $elem, $attr) {
         
-      $elem.bind('click', function() {
-        
-        if($attr.callCtrlMethod) {
-          $scope.$eval($attr.callCtrlMethod);  
-        } else {
-          console.warn('Pass name of the method you want to call');
-        }
-
-      });
-
       $scope.toggleRight = buildToggler('right');
       
       $scope.isOpenRight = function(){
