@@ -23,10 +23,10 @@ function CollectionService($state, _, $http, config, $q) {
       return defer.promise;
     }
 
-    function Delete(db) {
+    function Delete(dbName, colName) {
 
       var defer = $q.defer();
-      var url = config.apiEndPoint + '/database?database=' + db.name + '&secret=' + db.secret;
+      var url = config.apiEndPoint + '/' + dbName + '/' + colName;
 
       $http.delete(url).then(function(response){
         defer.resolve(response.data);

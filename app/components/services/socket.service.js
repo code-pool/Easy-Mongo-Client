@@ -40,6 +40,10 @@ function socketFactory(config,storageService,$rootScope) {
     connection.on('db-delete',function(data){
       $rootScope.$broadcast('db-delete',data);
     });
+
+    connection.on('collection-delete',function(data){
+      $rootScope.$broadcast('collection-delete',data);
+    });
   };
 
   function ReqDbInfo() {
