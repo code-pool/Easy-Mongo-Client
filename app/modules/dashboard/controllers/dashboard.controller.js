@@ -2,11 +2,11 @@
 
 angular
 .module('dashboard')
-.controller('DashboardCtrl', ['$scope', '$state','databases','socket', DashboardCtrl]);
+.controller('DashboardCtrl', ['$scope', '$mdDialog','$state','databases','socket', DashboardCtrl]);
 
 
 
-function DashboardCtrl($scope, $mdDialog, databases,socket) {
+function DashboardCtrl($scope, $mdDialog,$state, databases,socket) {
 
   socket.reqDbInfo();
   $scope.databases = databases;
@@ -20,7 +20,7 @@ function DashboardCtrl($scope, $mdDialog, databases,socket) {
     data.size = parseInt(data.size) + ' mb';
     $scope.databases[index].stats = data;
   });
-  
+
   $scope.showDailogForDb = function(ev) {
     
     $mdDialog.show({
