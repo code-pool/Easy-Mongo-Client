@@ -1,9 +1,9 @@
-<md-dialog aria-label="Create Database" flex="50" ng-cloak>
-  <form name="dbForm" ng-submit="create()">
+<md-dialog aria-label="Delete Database" flex="50" ng-cloak>
+  <form name="dbForm" ng-submit="delete()">
     
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h5>Create Database</h5>
+        <h5>Delete Database</h5>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="cancel()">
           <md-icon md-font-library="material-icons">clear</md-icon>
@@ -15,13 +15,17 @@
       <br>
       <md-input-container class="md-block" flex-gt-sm>
         <label>Enter Database Name</label>
-        <input type="text" ng-model="dbname" required="true">
+        <input type="text" ng-model="db.name" required="true">
+      </md-input-container>
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Enter Secret</label>
+        <input type="password" ng-model="db.secret" required="true">
       </md-input-container>
     </md-dialog-content>
     
     <md-dialog-actions layout="row">
       <span flex></span>
-      <md-button class="md-raised md-primary" ng-disabled="!dbname" type="submit">Save</md-button>
+      <md-button class="md-warn md-raised md-hue-2" type="submit">Delete</md-button>
     </md-dialog-actions>
 
   </form>

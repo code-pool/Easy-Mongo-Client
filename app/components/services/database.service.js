@@ -8,7 +8,8 @@ function DbService($state, _,$http,config,$q) {
   
     return {
       list : List,
-      create : Create
+      create : Create,
+      delete : Delete
     }
     
     function List(user) {
@@ -22,7 +23,19 @@ function DbService($state, _,$http,config,$q) {
       return defer.promise;
     }
 
-    function Create(db_name){
+    function Delete(db) {
+
+      var defer = $q.defer();
+      var url = config.apiEndPoint + '/database?database=' + db.name + '&secret=' + db.secret;
+
+      $http.delete(url).then(function(response){
+        defer.resolve(response.data);
+      },function(err){
+        defer.resolve([]);
+      });
+    }
+
+    function Create(db_name) {
       var defer = $q.defer();
       var url = config.apiEndPoint + '/';
       $http.post(url,{'database' : db_name}).then(function(response){
@@ -30,6 +43,7 @@ function DbService($state, _,$http,config,$q) {
       },function(err){
         defer.reject(err);
       });
+
       return defer.promise;
     }
     
