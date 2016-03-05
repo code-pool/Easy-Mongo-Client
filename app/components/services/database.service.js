@@ -2,17 +2,23 @@
 
 angular
  .module('services')
- .factory('DbService', ['$state', '_','$http','config', DbService]);
+ .factory('DbService', ['$state', '_','$http','config','$q', DbService]);
 
-function DbService($state, _,$http,config) {
+function DbService($state, _,$http,config,$q) {
   
     return {
       list : List,
     }
     
     function List(user) {
+      var defer = $q.defer();
       var url = config.apiEndPoint + '/';
-      return $http.get(url);
+      $http.get(url).then(function(response){
+        defer.resolve(response.data);
+      },function(err){
+        defer.resolve([]);
+      });
+      return defer.promise;
     }
     
 }
