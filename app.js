@@ -4,6 +4,7 @@
 angular
  .module('myApp', [
   
+  'ngMaterial',
   'ui.router',
   'LocalStorageModule',
   'angular-loading-bar',

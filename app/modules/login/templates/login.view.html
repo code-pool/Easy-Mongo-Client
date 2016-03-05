@@ -1,19 +1,21 @@
-<div class="wrapper">
-<form class="form-center animated fadeIn" ng-submit="submit(user)">       
-  <div class="login-form">
-    <center><h5>Login</h5></center>  
-    <div class="form-group">
-        <input type="text" ng-model="user.username" class="form-control login-field" value="" placeholder="Enter your email" id="login-name" autofocus="">
-        <label class="login-field-icon fui-user" for="login-name"></label>
-    </div>
+<div flex layout="row" layout-align="center center" layout="column" layout-padding ng-cloak>
+    <div flex-sm="40" flex-gt-sm="30" flex-gt-md="20" flex-gt-lg="10" class="md-whiteframe-z2">
+        <md-content class="md-padding">
+            <div flex-sm="50" flex-gt-sm="40" layout-sm="column">
+                <form name="loginForm" ng-submit="submit()">
+                    
+                    <md-input-container class="md-block">
+                      <input type="email" ng-model="user.username" placeholder="Enter Email" ng-required="true">
+                    </md-input-container>
+                    
+                    <md-input-container class="md-block">
+                        <label>Password:</label>
+                        <input type="password" ng-model="user.password" placeholder="Enter Password" required="true">
+                    </md-input-container>
 
-    <div class="form-group">
-        <input type="password" ng-model="user.password" class="form-control login-field" value="" placeholder="Password" id="login-pass">
-        <label class="login-field-icon fui-lock" for="login-pass"></label>
+                    <md-button class="md-raised md-primary" type="submit">Login</md-button>
+                </form>
+            </div>
+        </md-content>
     </div>
-          
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-    <a ui-sref="signup">Signup</a> | <a ui-sref="forgot">Forgot password</a>
-   </div>  
-</form>
 </div>

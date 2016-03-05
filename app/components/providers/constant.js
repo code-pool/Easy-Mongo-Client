@@ -3,6 +3,6 @@
 angular
     .module('providers')
     .constant('Credential', {
-        username : 'admin',
+        username : 'admin@codepool.com',
         password : 'admin'
     });
