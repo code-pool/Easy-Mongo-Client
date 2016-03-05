@@ -17,7 +17,8 @@ angular
   'providers',
   
   'login',
-  'dashboard'
+  'dashboard',
+  'collection'
  
  ])
  .config(['$locationProvider', '$urlRouterProvider','$httpProvider', urlRouterProvider]); 
