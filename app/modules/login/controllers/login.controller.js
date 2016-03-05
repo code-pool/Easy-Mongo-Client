@@ -11,7 +11,7 @@ function LoginCtrl($scope, $state, AuthService) {
     $scope.submit = function() {
         
       AuthService.login($scope.user).then(function(response){
-        console.log(response.data);
+        $state.go('dashboard');
       },function(err){
         console.log(err)
       });
