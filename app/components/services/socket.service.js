@@ -27,6 +27,7 @@ function socketFactory(config,storageService,$rootScope) {
   function AttachListener() {
     connection.on('db-info',function(data){
       console.log(data);
+      $rootScope.$broadcast('db-info',data);
     });
   };
 

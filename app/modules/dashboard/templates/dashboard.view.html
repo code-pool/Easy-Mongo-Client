@@ -1,2 +1,120 @@
 <side-nav></side-nav>
+<div style="height:100px;"></div>
+<md-content class="md-padding">
+<!--   <div  ng-repeat="db in databases" class="col-lg-3 col-md-3 col-sm-6 col-xs-12" >
+    <md-card ng-click="showGridBottomSheet(db)">
+
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">{{db.db_name}}</span>
+        </md-card-title-text>
+        <md-card-title-media>
+          <div class="md-media-lg card-media"></div>
+        </md-card-title-media>
+      </md-card-title>
+      <div>
+
+      <div class="col-md-12 col-lg-12 col-sm-12" ng-show="db.stats.collections" style="border-top:1px solid gray">
+        <div class="col-md-4 col-sm-4 col-lg-4">{{db.stats.collections}}</div>
+        <div class="col-md-4 col-sm-4 col-lg-4">{{db.stats.size}}</div>
+        <div class="col-md-4 col-sm-4 col-lg-4">{{db.stats.verified}}</div>
+      </div>
+    </div>  
+    </md-card>
+  </div> -->
+<!-- 
+<div class="container">
+    
+    <div class="row animated fadeIn">
+        <div class="col-md-4 col-sm-4">
+            <div class="card hovercard">
+                <div class="card-background">
+                    <img class="card-bkimg" alt="" src="http://lorempixel.com/100/100/people/9/">
+                </div>
+                <div class="useravatar">
+                    <img alt="" src="http://lorempixel.com/100/100/people/">
+                </div>
+                <div class="card-info"> <span class="card-title">{{db.db_name}}</span>
+
+                </div>
+            </div>
+            <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
+                <div class="btn-group" role="group">
+                    <button type="button" id="stars" class="btn btn-primary"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <div class="hidden-xs">Storage</div>
+                    </button>
+                </div>
+                <div class="btn-group" role="group">
+                    <button type="button" id="favorites" class="btn btn-primary"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+                        <div class="hidden-xs">Collections</div>
+                    </button>
+                </div>
+                <div class="btn-group" role="group">
+                    <button type="button" id="following" class="btn btn-primary"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        <div class="hidden-xs">Active</div>
+                    </button>
+                </div>
+            </div>
+         </div>
+    </div>
+
+</div> -->
+    <div class="col-sm-4 col-lg-4" ng-repeat="db in databases">
+  
+      <div class="panel panel-default bootcards-summary">
+  
+        <div class="panel-heading">
+          <h3 class="panel-title">{{db.db_name}}</h3>
+        </div>
+  
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-6 col-sm-4">
+              <div class="bootcards-summary-item" href="/contacts" data-pjax="#main"
+              data-title="Contacts" style="padding-top:35px;">
+                <i class="fa fa-3x fa-users"></i>
+                <h4>
+                  {{db.stats.collections}} collections
+                </h4>
+              </div>
+            </div>
+            <div class="col-xs-6 col-sm-4">
+              <div class="bootcards-summary-item" href="/companies" data-pjax="#main"
+              data-title="Companies" style="padding-top:35px;">
+                <i class="fa fa-3x fa-building-o"></i>
+                <h4>
+                  {{db.stats.size}}
+                </h4>
+              </div>
+            </div>
+            <div class="col-xs-6 col-sm-4">
+              <div class="bootcards-summary-item" href="/notes" data-pjax="#main"
+              data-title="Notes" style="padding-top:35px;">
+                <i class="fa fa-3x fa-clipboard"></i>
+                <h4 ng-show="db.stats.verified">
+                  Verified
+                </h4>
+                <h4 ng-hide="db.stats.verified">
+                  Not Verified
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="panel-footer">
+        <md-button class="md-fab md-mini" aria-label="Eat cake">
+            <md-icon>delete</md-icon>
+        </md-button>
+        <md-button class="md-fab md-mini" aria-label="Eat cake">
+            <md-icon>mode_edit</md-icon>
+        </md-button>
+        </div>  
+  
+      </div>
+  
+    </div>
+</md-content>
+
 <add-action call-ctrl-method="showDailogForDb()"></add-action>
+

@@ -8,7 +8,18 @@ angular
 function DashboardCtrl($scope, $mdDialog, databases,socket) {
 
   socket.reqDbInfo();
+  $scope.databases = databases;
 
+  $scope.toggleDbSelect = function(db) {
+    db.selected = !db.selected;
+  };
+
+  $scope.$on('db-info',function(event,data){
+    var index = _.findIndex(databases,{'db_name' : data.name});
+    data.size = parseInt(data.size) + ' mb';
+    $scope.databases[index].stats = data;
+  });
+  
   $scope.showDailogForDb = function(ev) {
     
     $mdDialog.show({
