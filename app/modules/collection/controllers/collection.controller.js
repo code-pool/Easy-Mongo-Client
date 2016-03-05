@@ -45,6 +45,11 @@ function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionServic
   $scope.addCollection = function(){
     $mdDialog.show({
       controller: CreateCollectionCtrl,
+      resolve : {
+        'collections' : function(){
+          return collections
+        }
+      },
       templateUrl: 'app/modules/collection/templates/createcol.view.html',
       parent: angular.element(document.body),
       clickOutsideToClose:false
@@ -52,7 +57,7 @@ function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionServic
   };
 }
 
-function CreateCollectionCtrl($scope,$mdDialog){
+function CreateCollectionCtrl($scope,$mdDialog,collections,_){
 
   $scope.types = [
     'String',
@@ -91,6 +96,12 @@ function CreateCollectionCtrl($scope,$mdDialog){
   };
 
   $scope.createSchema = function(){
+
+    var index = _.findIndex(collections,{'collection_name' : $scope.schema.collection});
+    if(index >= 0) {
+      return;
+    }
+    
     $mdDialog.hide();
   };
 
