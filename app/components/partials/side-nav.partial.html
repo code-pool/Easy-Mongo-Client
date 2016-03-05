@@ -1,0 +1,36 @@
+<div style="top:30px; right:30px; position:fixed">
+  <md-button class="md-fab md-primary" aria-label="Menu" ng-click="toggleRight()" ng-hide="isOpenRight()">
+    <md-icon md-font-library="material-icons">reorder</md-icon>
+  </md-button>
+</div>
+
+<div style="bottom:30px; right:30px; position:fixed">
+  <md-button class="md-fab md-primary" aria-label="Add">
+    <md-icon md-font-library="material-icons">add</md-icon>
+  </md-button>
+</div>
+
+<section layout="row" flex>
+  <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
+    
+    <md-toolbar class="md-theme-light">
+      <md-button class="" aria-label="Home">
+        <md-icon md-font-library="material-icons">home</md-icon>
+      </md-button>
+    </md-toolbar>
+    
+    <md-content layout-padding>
+      <md-button ng-click="close()" class="md-primary">
+        Close Sidenav Right
+      </md-button>
+      <form>
+        <md-input-container>
+          <label for="testInput">Test input</label>
+          <input type="text" id="testInput"
+                 ng-model="data" md-autofocus>
+        </md-input-container>
+      </form>
+    </md-content>
+     
+  </md-sidenav>
+</section>
