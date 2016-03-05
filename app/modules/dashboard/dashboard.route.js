@@ -17,6 +17,10 @@ angular
 
 						databases : function(DbService){
 							return DbService.list();
+						},
+
+						initSocket : function(socket) {
+							socket.initialize();
 						}
 					}
 				}
