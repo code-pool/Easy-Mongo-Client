@@ -5,5 +5,5 @@ angular
  .controller('DashboardCtrl', ['$scope', '$state', DashboardCtrl]);
 
 function DashboardCtrl($scope, $state) {
-	
+
 }
