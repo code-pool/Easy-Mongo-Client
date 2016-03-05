@@ -33,6 +33,9 @@ function DbService($state, _,$http,config,$q) {
       },function(err){
         defer.resolve([]);
       });
+
+      return defer.promise;
+      
     }
 
     function Create(db_name) {

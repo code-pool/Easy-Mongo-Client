@@ -3,7 +3,7 @@
 angular
  .module('dashboard')
  .controller('DashboardCtrl', ['$scope', '$mdDialog','databases', 'socket', DashboardCtrl])
- .controller('SaveDatabaseCtrl', ['$scope', '$mdDialog', 'toaster', SaveDatabaseCtrl])
+ .controller('CreateDatabaseCtrl', ['$scope', '$mdDialog', 'toaster', 'DbService', CreateDatabaseCtrl])
  .controller('DeleteDatabaseCtrl', ['$scope', '$mdDialog', 'toaster', 'DbService', DeleteDatabaseCtrl]);
 
 function DashboardCtrl($scope, $mdDialog, databases, socket) {
