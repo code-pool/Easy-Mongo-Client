@@ -3,11 +3,10 @@
 angular
  .module('dashboard')
  .controller('DashboardCtrl', ['$scope', '$mdDialog','databases','socket', DashboardCtrl])
- .controller('SaveDatabaseCtrl', ['$scope', '$mdDialog',SaveDatabaseCtrl]);
+ .controller('SaveDatabaseCtrl', ['$scope', '$mdDialog', 'toaster', SaveDatabaseCtrl]);
 
 function DashboardCtrl($scope, $mdDialog, databases,socket) {
 
-  console.log(databases);
   socket.reqDbInfo();
 
   $scope.showDailogForDb = function(ev) {
@@ -23,15 +22,23 @@ function DashboardCtrl($scope, $mdDialog, databases,socket) {
   }
 }
 
-function SaveDatabaseCtrl($scope, $mdDialog) {
+function SaveDatabaseCtrl($scope, $mdDialog, toaster) {
 
   $scope.cancel = function() {
     $mdDialog.cancel();
   };
 
   $scope.save = function() {
-    console.log($scope.dbname);
     $mdDialog.hide();
+    $scope.successPopup();
   }
-  
+
+  $scope.successPopup = function(){
+    toaster.pop({
+      type: 'success',
+      title: 'Congrats',
+      body: 'Database has been created',
+    });
+  };
+
 }

@@ -8,6 +8,9 @@ angular
   'ui.router',
   'LocalStorageModule',
   'angular-loading-bar',
+
+  'toaster',
+  'ngAnimate',
  
   'directives',
   'services',
