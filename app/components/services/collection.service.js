@@ -9,8 +9,9 @@ function CollectionService($state, _, $http, config, $q) {
     return {
       list : List,
       create : Create,
-      delete : Delete
-    }
+      delete : Delete,
+      add : Add
+    };
     
     function List(dbName) {
       var defer = $q.defer();
@@ -36,6 +37,20 @@ function CollectionService($state, _, $http, config, $q) {
 
       return defer.promise;
       
+    }
+
+    function Add(db_name,schema){
+
+      var defer = $q.defer(),
+          url = config.apiEndPoint + '/' + db_name;
+
+      $http.post(url,schema).then(function(){
+        defer.resolve();
+      },function(err){  
+        defer.reject(err);
+      });
+
+      return defer.promise;
     }
 
     function Create(db_name) {

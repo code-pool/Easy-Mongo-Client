@@ -53,11 +53,14 @@ function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionServic
       templateUrl: 'app/modules/collection/templates/createcol.view.html',
       parent: angular.element(document.body),
       clickOutsideToClose:false
-    });
+    }).then(function(col_name){
+      collections.push({'collection_name' : col_name,'stats' : {}});
+      $scope.collections = collections;
+    })
   };
 }
 
-function CreateCollectionCtrl($scope,$mdDialog,collections,_){
+function CreateCollectionCtrl($scope,$mdDialog,collections,_,CollectionService,$stateParams){
 
   $scope.types = [
     'String',
@@ -101,8 +104,14 @@ function CreateCollectionCtrl($scope,$mdDialog,collections,_){
     if(index >= 0) {
       return;
     }
+
+    CollectionService.add($stateParams.database,$scope.schema).then(function(){
+      $mdDialog.hide($scope.schema.collection);
+    },function(err){
+      console.log(err);
+    });
+
     
-    $mdDialog.hide();
   };
 
 
