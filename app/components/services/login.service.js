@@ -2,18 +2,17 @@
 
 angular
  .module('services')
- .factory('AuthService', ['$state', '_', 'Credential', AuthService]);
+ .factory('AuthService', ['$state', '_', 'Credential','$http','config', AuthService]);
 
-function AuthService($state, _, Credential) {
+function AuthService($state, _, Credential,$http,config) {
 	return {
         login : Login,
         logout : Logout
     }
     
     function Login(user) {
-      if (_.isEqual(Credential.username, user.username) && _.isEqual(Credential.password, user.password)) {
-          $state.go('dashboard');
-      }
+      var url = config.apiEndPoint + '/login';
+      return $http.post(url,user);
     }
 
     function Logout() {

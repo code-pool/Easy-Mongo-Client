@@ -10,7 +10,11 @@ function LoginCtrl($scope, $state, AuthService) {
     
     $scope.submit = function() {
         
-        AuthService.login($scope.user);
+      AuthService.login($scope.user).then(function(response){
+        console.log(response.data);
+      },function(err){
+        console.log(err)
+      });
             
     }
 }
