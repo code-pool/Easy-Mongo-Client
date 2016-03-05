@@ -3,7 +3,7 @@
 angular
  .module('dashboard')
  .controller('DashboardCtrl', ['$scope', '$mdDialog','databases','socket', DashboardCtrl])
- .controller('SaveDatabaseCtrl', ['$scope', '$mdDialog', 'toaster', SaveDatabaseCtrl]);
+ .controller('CreateDatabaseCtrl', ['$scope', '$mdDialog', 'toaster','DbService', CreateDatabaseCtrl]);
 
 
 function DashboardCtrl($scope, $mdDialog, databases,socket) {
@@ -21,10 +21,14 @@ function DashboardCtrl($scope, $mdDialog, databases,socket) {
     $scope.databases[index].stats = data;
   });
 
+  $scope.$on('db-create',function(event,data){
+    $scope.databases.push(data);
+  });
+
   $scope.showDailogForDb = function(ev) {
     
     $mdDialog.show({
-      controller: SaveDatabaseCtrl,
+      controller: CreateDatabaseCtrl,
       templateUrl: 'app/modules/dashboard/templates/createdb.view.html',
       parent: angular.element(document.body),
       targetEvent: ev,
@@ -34,15 +38,17 @@ function DashboardCtrl($scope, $mdDialog, databases,socket) {
   }
 }
 
-function SaveDatabaseCtrl($scope, $mdDialog, toaster) {
+function CreateDatabaseCtrl($scope, $mdDialog, toaster, DbService) {
 
   $scope.cancel = function() {
     $mdDialog.cancel();
   };
 
-  $scope.save = function() {
-    $mdDialog.hide();
-    $scope.successPopup();
+  $scope.create = function() {
+    DbService.create($scope.dbname).then(function(){
+      $mdDialog.hide();
+      $scope.successPopup();      
+    });
   }
 
   $scope.successPopup = function(){
