@@ -47,6 +47,11 @@ function DashboardCtrl($scope, $mdDialog, databases, socket) {
       controller: DeleteDatabaseCtrl,
       templateUrl: 'app/modules/dashboard/templates/deletedb.view.html',
       parent: angular.element(document.body),
+      resolve : {
+        database : function(){
+          return dbName;
+        }
+      },
       clickOutsideToClose:true
     }).then(function(){
     },function(err){
@@ -60,6 +65,7 @@ function CreateDatabaseCtrl($scope, $mdDialog, toaster, DbService) {
   $scope.cancel = function() {
     $mdDialog.cancel();
   };
+
 
   $scope.create = function() {
     DbService.create($scope.dbname).then(function(){
@@ -78,9 +84,11 @@ function CreateDatabaseCtrl($scope, $mdDialog, toaster, DbService) {
 
 }
 
-function DeleteDatabaseCtrl($scope, $mdDialog, toaster, DbService) {
+function DeleteDatabaseCtrl($scope, $mdDialog, toaster, DbService,database) {
   
-  $scope.db = {};
+  $scope.db = {
+    'name' : database
+  };
 
   $scope.cancel = function() {
     $mdDialog.cancel();
