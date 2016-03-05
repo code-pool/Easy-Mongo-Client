@@ -12,6 +12,10 @@ function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionServic
     db.selected = !db.selected;
   };
 
+  $scope.schema = {
+    'type' : 'String'
+  }
+
   $scope.$on('collection-info',function(event,data){
     var index = _.findIndex(collections,{'collection_name' : data.name});
     $scope.collections[index].stats = data;
@@ -36,5 +40,59 @@ function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionServic
     }, function() {
       console.log('cancel');
     });
-  }
+  };
+
+  $scope.addCollection = function(){
+    $mdDialog.show({
+      controller: CreateCollectionCtrl,
+      templateUrl: 'app/modules/collection/templates/createcol.view.html',
+      parent: angular.element(document.body),
+      clickOutsideToClose:false
+    });
+  };
 }
+
+function CreateCollectionCtrl($scope,$mdDialog){
+
+  $scope.types = [
+    'String',
+    'Number',
+    'Array',
+    'Object',
+    'Date',
+    'Boolean'
+  ];
+
+  $scope.cancel = function() {
+    $mdDialog.cancel();
+  };
+
+  $scope.schema = {
+    'collection' : '',
+    'fields' : [{
+      'key' : '',
+      'type' : 'String',
+      'required' : true,
+      'alias' : ''
+    }]
+  };
+
+  $scope.addField = function(){
+    $scope.schema.fields.push({
+      'key' : '',
+      'type' : 'String',
+      'required' : true,
+      'alias' : ''      
+    });
+  };
+
+  $scope.deleteField = function(index){
+    $scope.schema.fields.splice(index,1);
+  };
+
+  $scope.createSchema = function(){
+    $mdDialog.hide();
+  };
+
+
+};

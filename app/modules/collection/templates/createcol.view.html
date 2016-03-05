@@ -1,0 +1,55 @@
+<md-dialog aria-label="Create Collection" flex="70" ng-cloak>
+  <form name="colForm" ng-submit="createSchema()">
+    
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h5>Create Collection</h5>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-font-library="material-icons">clear</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <md-content layout-padding>
+        <form name="userForm">
+          <div layout-gt-sm="row">
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Collection Name</label>
+              <input ng-model="schema.collection" required>
+            </md-input-container>
+          </div>
+          <div layout-gt-sm="row" ng-repeat="field in schema.fields">
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Key</label>
+              <input ng-model="schema.fields[$index].key" required>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Type</label>
+             <md-select ng-model="schema.fields[$index].type">
+                <md-option ng-repeat="type in types" value="{{type}}">
+                  {{type}}
+                </md-option>
+              </md-select>
+            </md-input-container>
+            <md-button class="md-fab md-mini md-primary" aria-label="Add" ng-click="deleteField($index)" ng-show="schema.fields.length > 1">
+              <md-icon md-font-library="material-icons">delete</md-icon>
+            </md-button>            
+          </div>
+          <div>
+            <md-button class="md-fab md-mini md-primary" aria-label="Add" ng-click="addField()">
+              <md-icon md-font-library="material-icons">add</md-icon>
+            </md-button>
+          </div>
+        </form>
+      </md-content>
+    </md-dialog-content>
+    
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button class="md-raised md-primary" ng-disabled="colForm.$invalid" ng-click="createSchema()" type="submit">Save</md-button>
+    </md-dialog-actions>
+
+  </form>
+</md-dialog>
