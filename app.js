@@ -5,7 +5,6 @@ angular
  .module('myApp', [
   
   'ui.router',
-  'ui.bootstrap',
   'LocalStorageModule',
   'angular-loading-bar',
  

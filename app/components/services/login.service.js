@@ -2,18 +2,16 @@
 
 angular
  .module('services')
- .factory('AuthService', ['$state', '_', 'Credential', AuthService]);
+ .factory('AuthService', ['$state', '_', AuthService]);
 
-function AuthService($state, _, Credential) {
+function AuthService($state, _) {
 	return {
         login : Login,
         logout : Logout
     }
     
     function Login(user) {
-        if (_.isEqual(Credential.username, user.username) && _.isEqual(Credential.password, user.password)) {
-            $state.go('dashboard');
-        }
+        
     }
 
     function Logout() {
