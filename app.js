@@ -17,9 +17,9 @@ angular
   'dashboard'
  
  ])
- .config(['$locationProvider', '$urlRouterProvider', urlRouterProvider]); 
+ .config(['$locationProvider', '$urlRouterProvider','$httpProvider', urlRouterProvider]); 
 
-function urlRouterProvider($locationProvider, $urlRouterProvider) {
-
+function urlRouterProvider($locationProvider, $urlRouterProvider, $httpProvider) {
+  $httpProvider.interceptors.push('requestInterceptor');
   $urlRouterProvider.otherwise('/login');
 };

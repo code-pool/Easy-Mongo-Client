@@ -12,7 +12,17 @@ angular
 			views : {
 				'@' : {
 					controller : 'DashboardCtrl',
-					templateUrl : 'app/modules/dashboard/templates/dashboard.view.html'		  				
+					templateUrl : 'app/modules/dashboard/templates/dashboard.view.html',
+					resolve : {
+
+						databases : function(DbService){
+							return DbService.list();
+						},
+
+						initSocket : function(socket) {
+							socket.initialize();
+						}
+					}
 				}
 			}  
 		});

@@ -40,6 +40,7 @@
   <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
   <script src="bower_components/angular-loading-bar/src/loading-bar.js"></script>
   <script src="bower_components/lodash/dist/lodash.min.js"></script>
+  <script src="bower_components/socket.io-client/socket.io.js"></script>
   
   <!-- Load Directives -->
   <script src="/app/components/directives/index.directive.js"></script>
@@ -53,8 +54,12 @@
 
   <!-- Load Services -->
   <script src="/app/components/services/index.service.js"></script>
-  <script src="/app/components/services/login.service.js"></script>
+  <script src="/app/components/services/storage.service.js"></script>
+  <script src="/app/components/services/auth.service.js"></script>
   <script src="/app/components/services/lodash.service.js"></script>
+  <script src="/app/components/services/database.service.js"></script>
+  <script src="/app/components/services/http.service.js"></script>
+  <script src="/app/components/services/socket.service.js"></script>
   
   <!-- Login module -->
   <script src="/app/modules/login/login.index.js"></script>

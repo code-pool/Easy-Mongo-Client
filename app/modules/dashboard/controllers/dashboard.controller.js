@@ -2,10 +2,13 @@
 
 angular
  .module('dashboard')
- .controller('DashboardCtrl', ['$scope', '$mdDialog', DashboardCtrl])
+ .controller('DashboardCtrl', ['$scope', '$mdDialog','databases','socket', DashboardCtrl])
  .controller('SaveDatabaseCtrl', ['$scope', '$mdDialog',SaveDatabaseCtrl]);
 
-function DashboardCtrl($scope, $mdDialog) {
+function DashboardCtrl($scope, $mdDialog, databases,socket) {
+
+  console.log(databases);
+  socket.reqDbInfo();
 
   $scope.showDailogForDb = function(ev) {
     
@@ -30,5 +33,5 @@ function SaveDatabaseCtrl($scope, $mdDialog) {
     console.log($scope.dbname);
     $mdDialog.hide();
   }
-
+  
 }
