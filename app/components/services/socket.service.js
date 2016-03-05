@@ -31,7 +31,11 @@ function socketFactory(config,storageService,$rootScope) {
 
     connection.on('db-create',function(data){
       $rootScope.$broadcast('db-create',data);
-    })
+    });
+
+    connection.on('db-delete',function(data){
+      $rootScope.$broadcast('db-delete',data);
+    });
   };
 
   function ReqDbInfo() {

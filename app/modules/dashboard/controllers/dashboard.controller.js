@@ -36,6 +36,11 @@ function DashboardCtrl($scope, $mdDialog, databases, socket) {
 
   };
 
+  $scope.$on('db-delete',function(event,db_name){
+    var index = _.findIndex(databases,{'db_name' : db_name});
+    $scope.databases.splice(index,1);
+  });
+  
   $scope.deleteDb = function(dbName) {
 
     $mdDialog.show({
@@ -44,8 +49,6 @@ function DashboardCtrl($scope, $mdDialog, databases, socket) {
       parent: angular.element(document.body),
       clickOutsideToClose:true
     }).then(function(){
-      var index = _.findIndex(databases,{'db_name' : dbName});
-      $scope.databases.splice(index,1);
     },function(err){
       console.log(err);
     })
