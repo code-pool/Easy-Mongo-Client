@@ -8,6 +8,7 @@ angular
   'ui.router',
   'LocalStorageModule',
   'angular-loading-bar',
+  'md.data.table',
 
   'toaster',
   'ngAnimate',

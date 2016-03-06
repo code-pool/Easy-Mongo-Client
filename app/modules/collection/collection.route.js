@@ -26,6 +26,16 @@ angular
           }
         }
       }  
+    })
+    .state('home.collection.documents', {
+      url : '/{database}/collection/documents',
+      parent: 'home',
+      views : {
+        '@' : {
+          controller : 'CollectionCtrl',
+          templateUrl : 'app/modules/collection/templates/collection.documents.html'
+        }
+      }  
     });
         
 }

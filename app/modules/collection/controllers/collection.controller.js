@@ -2,7 +2,8 @@
 
 angular
  .module('collection')
- .controller('CollectionCtrl', ['$scope', '$mdDialog','collections', 'socket', 'CollectionService', '$stateParams', CollectionCtrl]);
+ .controller('CollectionCtrl', ['$scope', '$mdDialog','collections', 'socket', 'CollectionService', '$stateParams', CollectionCtrl])
+ .controller('DocumentsCtrl',['$scope',DocumentsCtrl]);
 
 function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionService, $stateParams) {
   socket.reqDbInfo();
@@ -58,6 +59,10 @@ function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionServic
       $scope.collections = collections;
     })
   };
+}
+
+function DocumentsCtrl($scope){
+  $scope.desserts = { };
 }
 
 function CreateCollectionCtrl($scope,$mdDialog,collections,_,CollectionService,$stateParams){
