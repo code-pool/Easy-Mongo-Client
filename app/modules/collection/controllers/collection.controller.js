@@ -2,10 +2,11 @@
 
 angular
  .module('collection')
- .controller('CollectionCtrl', ['$scope', '$mdDialog','collections', 'socket', 'CollectionService', '$stateParams', CollectionCtrl])
- .controller('DocumentsCtrl',['$scope',DocumentsCtrl]);
+ .controller('CollectionCtrl', ['$scope', '$mdDialog','collections', 'socket', 'CollectionService', '$stateParams','$state', CollectionCtrl])
+ .controller('DocumentsCtrl',['$scope','documents','$stateParams','_',DocumentsCtrl]);
 
-function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionService, $stateParams) {
+function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionService, $stateParams,$state) {
+
   socket.reqDbInfo();
   $scope.collections = collections;
 
@@ -15,7 +16,11 @@ function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionServic
 
   $scope.schema = {
     'type' : 'String'
-  }
+  };
+
+  $scope.viewDocs = function(collection_name){
+    $state.go('home.collection.documents',{'database' : $stateParams.database,'collection': collection_name});
+  };
 
   $scope.$on('collection-info',function(event,data){
     var index = _.findIndex(collections,{'collection_name' : data.name});
@@ -61,8 +66,15 @@ function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionServic
   };
 }
 
-function DocumentsCtrl($scope){
-  $scope.desserts = { };
+function DocumentsCtrl($scope,documents,$stateParams,_){
+  
+  $scope.collection_name = $stateParams.collection;
+  var keys = Object.keys(documents[0]);
+  keys = _.reject(keys,function(keyVal){
+    return keyVal == '_id';
+  });
+  $scope.keys = keys;
+  $scope.rows = documents;
 }
 
 function CreateCollectionCtrl($scope,$mdDialog,collections,_,CollectionService,$stateParams){

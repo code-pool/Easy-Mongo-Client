@@ -28,12 +28,17 @@ angular
       }  
     })
     .state('home.collection.documents', {
-      url : '/{database}/collection/documents',
+      url : '/{database}/{collection}/documents',
       parent: 'home',
       views : {
         '@' : {
-          controller : 'CollectionCtrl',
-          templateUrl : 'app/modules/collection/templates/collection.documents.html'
+          controller : 'DocumentsCtrl',
+          templateUrl : 'app/modules/collection/templates/collection.documents.html',
+          resolve : { 
+            documents : function(DocumentService,$stateParams){
+              return DocumentService.list($stateParams.database,$stateParams.collection);
+            }
+          }
         }
       }  
     });
