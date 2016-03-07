@@ -2,9 +2,9 @@
 
 angular
     .module('directives')
-    .directive('sideNav', ['$mdSidenav','$rootScope','$parse', SideNav]);
+    .directive('sideNav', ['$mdSidenav','$rootScope','notificationService', SideNav]);
    
-function SideNav($mdSidenav,$rootScope,$parse) {
+function SideNav($mdSidenav,$rootScope,notificationService) {
     return {
         restrict: 'EA',
         templateUrl: 'app/components/partials/side-nav.partial.html',
@@ -37,6 +37,8 @@ function SideNav($mdSidenav,$rootScope,$parse) {
       $scope.close = function () {
         $mdSidenav('left').close();
       };
+
+      // $scope.notifications = [{'msg' : 'Something is going on...'},{'msg' : 'Again...'}]
 
       function buildToggler(navID) {
         return function() {
