@@ -18,13 +18,25 @@ function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionServic
     'type' : 'String'
   };
 
-  $scope.viewDocs = function(collection_name){
+  $scope.viewDocs = function(index){
+    var collection_name = $scope.collections[index].collection_name;
     $state.go('home.collection.documents',{'database' : $stateParams.database,'collection': collection_name});
   };
 
   $scope.$on('collection-info',function(event,data){
     var index = _.findIndex(collections,{'collection_name' : data.name});
-    $scope.collections[index].stats = data;
+    delete data.name;
+    $scope.collections[index].stats = {
+      count : {
+        val : (data.count),
+        icon : 'assignment',
+        clickAction : 'viewDocs(col.collection_name)'
+      },
+      verified : {
+        val : (data.verified) ? 'Verified' : 'Not verified',
+        icon : (data.verified) ? 'check_circle' : 'warning'
+      }
+    };
     $scope.$apply();
   });
   $scope.$on('collection-delete',function(event,data){
