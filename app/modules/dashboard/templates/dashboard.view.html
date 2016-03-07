@@ -17,7 +17,7 @@
          <ul ng-if="!db.stats.count" class="buckets layout-wrap layout-align-center-center layout-row" layout="" layout-align="center center" layout-wrap="">
             <li flex="100"
              class="ng-scope flex-gt-md-100 flex-100">
-                  <a class="md-primary md-raised md-button md-ink-ripple" aria-label="Getting Started">
+                  <a class="md-primary md-raised md-button md-ink-ripple" ng-click="viewCollections($parent.$index)">
                     Loading statistics...
                   </span><div class="md-ripple-container"></div></a>
             </li>
