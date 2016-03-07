@@ -1,12 +1,18 @@
 <div ng-hide="hide">
-  <div style="top:10px; right:10px; position:fixed">
-    <md-button class="md-fab md-primary" aria-label="Menu" ng-click="toggleRight()" ng-hide="isOpenRight()">
-      <md-icon md-font-library="material-icons">reorder</md-icon>
-    </md-button>
-  </div>
+
+  <md-toolbar style="top:0px; position:fixed; " class="md-whiteframe-glow-z1 site-content-toolbar">
+    <div clas="md-toolbar-item">
+      <md-button class="md-fab md-primary" aria-label="Menu" ng-click="toggleRight()" ng-hide="isOpenRight()">
+        <md-icon md-font-library="material-icons">reorder</md-icon>
+      </md-button>
+      <md-button ng-click="onAddClick()" class="md-fab md-primary" aria-label="Add">
+        <md-icon md-font-library="material-icons">add</md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
 
   <section layout="row" flex>
-    <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
 
       <md-toolbar class="md-toolbar-tool">
         <md-button ui-sref="home" class="md-raised md-primary">Home</md-button>
@@ -28,4 +34,5 @@
        
     </md-sidenav>
   </section>
+
 </div>

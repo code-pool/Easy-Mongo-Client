@@ -2,9 +2,9 @@
 
 angular
     .module('directives')
-    .directive('addAction', ['$mdSidenav', AddAction]);
+    .directive('addAction', ['$mdSidenav','$parse', AddAction]);
    
-function AddAction($mdSidenav) {
+function AddAction($mdSidenav,$parse) {
     return {
         restrict: 'EA',
         templateUrl: 'app/components/partials/add-action.partial.html',
@@ -12,7 +12,8 @@ function AddAction($mdSidenav) {
     };
 
     function linkFunc($scope, $elem, $attr) {
-        
+      
+      $scope.onAddClick = $parse($attr.addCtrlMethod)
       $elem.bind('click', function() {
         
         if($attr.callCtrlMethod) {

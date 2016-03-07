@@ -2,9 +2,9 @@
 
 angular
     .module('directives')
-    .directive('sideNav', ['$mdSidenav','$rootScope', SideNav]);
+    .directive('sideNav', ['$mdSidenav','$rootScope','$parse', SideNav]);
    
-function SideNav($mdSidenav,$rootScope) {
+function SideNav($mdSidenav,$rootScope,$parse) {
     return {
         restrict: 'EA',
         templateUrl: 'app/components/partials/side-nav.partial.html',
@@ -13,11 +13,14 @@ function SideNav($mdSidenav,$rootScope) {
 
     function linkFunc($scope, $elem, $attr) {
       
+      $scope.onAddClick = function(){
+        $scope.$eval($attr.addClickMethod);
+      };
 
       $rootScope.$watch('login',function(newVal){
 
         if(newVal){
-          $mdSidenav('right').close();
+          $mdSidenav('left').close();
           $scope.hide = true;
           return;
         }
@@ -25,14 +28,14 @@ function SideNav($mdSidenav,$rootScope) {
         $scope.hide = false;
       })
 
-      $scope.toggleRight = buildToggler('right');
+      $scope.toggleRight = buildToggler('left');
       
       $scope.isOpenRight = function(){
-        return $mdSidenav('right').isOpen();
+        return $mdSidenav('left').isOpen();
       };
 
       $scope.close = function () {
-        $mdSidenav('right').close();
+        $mdSidenav('left').close();
       };
 
       function buildToggler(navID) {
