@@ -17,7 +17,7 @@ function DashboardCtrl($scope, $mdDialog, databases, socket, $state) {
 
   $scope.$on('db-info',function(event,data){
     
-    var index = _.findIndex(databases,{'db_name' : data.name});
+    var index = _.findIndex(databases,{'db_name' : data.database});
     data.size = (data.size).toFixed(2) + ' mb';
 
     $scope.databases[index].stats = {

@@ -24,8 +24,8 @@ function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionServic
   };
 
   $scope.$on('collection-info',function(event,data){
-    var index = _.findIndex(collections,{'collection_name' : data.name});
-    delete data.name;
+    var index = _.findIndex(collections,{'collection_name' : data.collection});
+    delete data.collection;
     $scope.collections[index].stats = {
       count : {
         val : (data.count),

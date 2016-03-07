@@ -28,14 +28,17 @@ function socketFactory(config,storageService,$rootScope) {
 
     connection.on('db-info',function(data){
       $rootScope.$broadcast('db-info',data);
+      $rootScope.$broadcast('notification-complete',('info-database-' + data.database));
     });
 
     connection.on('collection-info',function(data){
       $rootScope.$broadcast('collection-info',data);
+      $rootScope.$broadcast('notification-complete',('info-collection-' + data.collection));
     });
 
     connection.on('db-create',function(data){
       $rootScope.$broadcast('db-create',data);
+      $rootScope.$broadcast('notification-complete',('delete-collection-' + data.collection));
     });
 
     connection.on('db-delete',function(data){
