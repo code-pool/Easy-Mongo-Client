@@ -34,6 +34,8 @@ function DashboardCtrl($scope, $mdDialog, databases, socket, $state) {
       }
     };
 
+    $scope.$apply();
+
   });
 
   $scope.viewCollections = function(index) {
