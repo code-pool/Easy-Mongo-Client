@@ -11,35 +11,29 @@
     <div class="panel panel-default bootcards-summary">
       <div class="panel-body">
         
-        <div class="row">
-          <div class="col-xs-6 col-sm-6 col-lg-4 col-md-6 thumbnail">
-            <div class="bootcards-summary-item" ui-sref="home.collection({database : db.db_name})" data-pjax="#main"
-            data-title="Contacts" style="padding-top:35px;">
-              <h4>
-                {{db.stats.collections}} Collections
-              </h4>
-            </div>
-          </div>
-          <div class="col-xs-6 col-sm-6 col-lg-4 col-md-6 thumbnail">
-            <div class="bootcards-summary-item" href="/companies" data-pjax="#main"
-            data-title="Companies" style="padding-top:35px;">
-              <h4>
-                {{db.stats.size}}
-              </h4>
-            </div>
-          </div>
-          <div class="col-xs-6 col-sm-6 col-lg-4 col-md-6 thumbnail">
-            <div class="bootcards-summary-item" href="/notes" data-pjax="#main"
-            data-title="Notes" style="padding-top:35px;">
-              <h4 ng-show="db.stats.verified">
-                Verified
-              </h4>
-              <h4 ng-hide="db.stats.verified">
-                Not Verified
-              </h4>
-            </div>
-          </div>
+      <div class="panel-body">
+        <div>
+
+         <ul ng-if="!db.stats.count" class="buckets layout-wrap layout-align-center-center layout-row" layout="" layout-align="center center" layout-wrap="">
+            <li flex="100"
+             class="ng-scope flex-gt-md-100 flex-100">
+                  <a class="md-primary md-raised md-button md-ink-ripple" aria-label="Getting Started">
+                    Loading statistics...
+                  </span><div class="md-ripple-container"></div></a>
+            </li>
+          </ul>
+          <ul flex="100" class="buckets layout-wrap layout-align-center-center layout-row" layout="" layout-align="center center" layout-wrap="">
+            <li flex="30" flex-gt-md="30" ng-repeat="colval in db.stats"
+             class="ng-scope flex-gt-md-30 flex-30">
+                <a class="md-primary md-raised md-button md-ink-ripple" ng-click="viewCollections($parent.$index)">
+                  {{colval.val}}
+                  <md-icon>{{colval.icon}}</md-icon>
+                  <div class="md-ripple-container"></div>
+                </a>
+            </li>
+          </ul>
         </div>
+      </div>
       </div>
 
       <div class="panel-footer">

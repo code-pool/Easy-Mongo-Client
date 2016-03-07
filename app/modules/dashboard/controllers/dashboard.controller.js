@@ -2,11 +2,11 @@
 
 angular
  .module('dashboard')
- .controller('DashboardCtrl', ['$scope', '$mdDialog','databases', 'socket', DashboardCtrl])
+ .controller('DashboardCtrl', ['$scope', '$mdDialog','databases', 'socket','$state', DashboardCtrl])
  .controller('CreateDatabaseCtrl', ['$scope', '$mdDialog', 'toaster', 'DbService', CreateDatabaseCtrl])
  .controller('DeleteDatabaseCtrl', ['$scope', '$mdDialog', 'toaster', 'DbService', DeleteDatabaseCtrl]);
 
-function DashboardCtrl($scope, $mdDialog, databases, socket) {
+function DashboardCtrl($scope, $mdDialog, databases, socket, $state) {
 
   socket.reqDbInfo();
   $scope.databases = databases;
@@ -16,10 +16,30 @@ function DashboardCtrl($scope, $mdDialog, databases, socket) {
   };
 
   $scope.$on('db-info',function(event,data){
+    
     var index = _.findIndex(databases,{'db_name' : data.name});
     data.size = (data.size).toFixed(2) + ' mb';
-    $scope.databases[index].stats = data;
+
+    $scope.databases[index].stats = {
+      count : {
+        val : (data.collections),
+        icon : 'assignment'
+      },
+      size : {
+        val : data.size,
+        icon : 'view_column'
+      },
+      verified : {
+        icon : (data.verified) ? 'check_circle' : 'warning'
+      }
+    };
+
   });
+
+  $scope.viewCollections = function(index) {
+    var database = $scope.databases[index].db_name;
+    $state.go('home.collection',{'database' : database});
+  };
 
   $scope.$on('db-create',function(event,data){
     $scope.databases.push(data);
