@@ -27,13 +27,15 @@ function socketFactory(config,storageService,$rootScope) {
   function AttachListener() {
 
     connection.on('db-info',function(data){
+      var key = 'create-database-' + data.database;
       $rootScope.$broadcast('db-info',data);
-      $rootScope.$broadcast('notification-complete',('create-database-' + data.database));
+      $rootScope.$broadcast('notification-complete',key);
     });
 
     connection.on('collection-info',function(data){
+      var key = 'create-collection-' + data.collection;
       $rootScope.$broadcast('collection-info',data);
-      $rootScope.$broadcast('notification-complete',('create-collection-' + data.collection));
+      $rootScope.$broadcast('notification-complete',key);
     });
 
     connection.on('db-create',function(data){
@@ -41,13 +43,15 @@ function socketFactory(config,storageService,$rootScope) {
     });
 
     connection.on('db-delete',function(data){
+      var key = 'delete-database-' + data.database;
       $rootScope.$broadcast('db-delete',data);
-      $rootScope.$broadcast('notification-complete',('delete-db-' + data.database));
+      $rootScope.$broadcast('notification-complete',key);
     });
 
     connection.on('collection-delete',function(data){
+      var key = 'delete-collection-' + data.collection;
       $rootScope.$broadcast('collection-delete',data);
-      $rootScope.$broadcast('notification-complete',('delete-collection-' + data.collection));
+      $rootScope.$broadcast('notification-complete',key);
     });
   };
 
