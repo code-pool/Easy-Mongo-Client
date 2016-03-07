@@ -17,7 +17,7 @@ function DashboardCtrl($scope, $mdDialog, databases, socket, $state) {
 
   $scope.$on('db-info',function(event,data){
     
-    var index = _.findIndex(databases,{'db_name' : data.database});
+    var index = _.findIndex($scope.databases,{'database' : data.database});
     data.size = (data.size).toFixed(2) + ' mb';
 
     $scope.databases[index].stats = {
@@ -39,7 +39,7 @@ function DashboardCtrl($scope, $mdDialog, databases, socket, $state) {
   });
 
   $scope.viewCollections = function(index) {
-    var database = $scope.databases[index].db_name;
+    var database = $scope.databases[index].database;
     $state.go('home.collection',{'database' : database});
   };
 
@@ -59,7 +59,7 @@ function DashboardCtrl($scope, $mdDialog, databases, socket, $state) {
   };
 
   $scope.$on('db-delete',function(event,data){
-    var index = _.findIndex(databases,{'db_name' : data.database});
+    var index = _.findIndex(databases,{'database' : data.database});
     $scope.databases.splice(index,1);
     $scope.$apply();
   });
@@ -92,7 +92,7 @@ function CreateDatabaseCtrl($scope, $mdDialog, toaster, DbService) {
 
   $scope.create = function() {
     DbService.create($scope.dbname).then(function(){
-      $mdDialog.hide();
+      $mdDialog.hide($scope.dbName);
       $scope.successPopup();      
     });
   }

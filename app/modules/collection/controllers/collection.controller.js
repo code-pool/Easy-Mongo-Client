@@ -2,10 +2,10 @@
 
 angular
  .module('collection')
- .controller('CollectionCtrl', ['$scope', '$mdDialog','collections', 'socket', 'CollectionService', '$stateParams','$state', CollectionCtrl])
+ .controller('CollectionCtrl', ['$scope', '$mdDialog','collections', 'socket', 'CollectionService', '$stateParams','$state','$rootScope', CollectionCtrl])
  .controller('DocumentsCtrl',['$scope','documents','$stateParams','_',DocumentsCtrl]);
 
-function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionService, $stateParams,$state) {
+function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionService, $stateParams,$state,$rootScope) {
 
   socket.reqDbInfo();
   $scope.collections = collections;
@@ -39,6 +39,7 @@ function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionServic
     };
     $scope.$apply();
   });
+
   $scope.$on('collection-delete',function(event,data){
     var index = _.findIndex(collections,{'collection_name' : data.collection});
     $scope.collections.splice(index,1);
@@ -53,8 +54,13 @@ function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionServic
         .ok('Yes')
         .cancel('No');
     $mdDialog.show(confirm).then(function() {
-      console.log(colName);
+
+      var msg = 'Deleting collection ' + colName,
+        key = 'delete-collection-' + colName;
+
+      $rootScope.$broadcast('notification',{'msg' : msg,'key' : key,'complete': false});
       CollectionService.delete($stateParams.database, colName);
+
     }, function() {
       console.log('cancel');
     });
@@ -89,7 +95,7 @@ function DocumentsCtrl($scope,documents,$stateParams,_){
   $scope.rows = documents;
 }
 
-function CreateCollectionCtrl($scope,$mdDialog,collections,_,CollectionService,$stateParams){
+function CreateCollectionCtrl($scope,$mdDialog,collections,_,CollectionService,$stateParams,$rootScope){
 
   $scope.types = [
     'String',
@@ -133,6 +139,11 @@ function CreateCollectionCtrl($scope,$mdDialog,collections,_,CollectionService,$
     if(index >= 0) {
       return;
     }
+
+    var msg = 'Creating collection ' + $scope.schema.collection,
+        key = 'create-collection-' + $scope.schema.collection;
+
+    $rootScope.$broadcast('notification',{'msg' : msg,'key' : key,'complete': false});
 
     CollectionService.add($stateParams.database,$scope.schema).then(function(){
       $mdDialog.hide($scope.schema.collection);
