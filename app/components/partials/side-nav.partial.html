@@ -21,7 +21,7 @@
       
       <md-content>
       <md-list>
-        <md-list-item class="md-1-line" ng-repeat="notf in notifications">
+        <md-list-item class="md-1-line" ng-repeat="notf in notifications track by $index">
           <div class="md-list-item-text" layout="column" layout-align="space-around">
             <div layout="row">
               <h4>{{notf.msg}}

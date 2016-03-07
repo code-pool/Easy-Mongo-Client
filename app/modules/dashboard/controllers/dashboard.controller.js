@@ -4,7 +4,7 @@ angular
  .module('dashboard')
  .controller('DashboardCtrl', ['$scope', '$mdDialog','databases', 'socket','$state', DashboardCtrl])
  .controller('CreateDatabaseCtrl', ['$scope', '$mdDialog', 'toaster', 'DbService', CreateDatabaseCtrl])
- .controller('DeleteDatabaseCtrl', ['$scope', '$mdDialog', 'toaster', 'DbService', DeleteDatabaseCtrl]);
+ .controller('DeleteDatabaseCtrl', ['$scope', '$mdDialog', 'toaster', 'DbService','$rootScope', DeleteDatabaseCtrl]);
 
 function DashboardCtrl($scope, $mdDialog, databases, socket, $state) {
 
@@ -107,7 +107,7 @@ function CreateDatabaseCtrl($scope, $mdDialog, toaster, DbService) {
 
 }
 
-function DeleteDatabaseCtrl($scope, $mdDialog, toaster, DbService,database) {
+function DeleteDatabaseCtrl($scope, $mdDialog, toaster, DbService,database,$rootScope) {
   
   $scope.db = {
     'name' : database
@@ -119,29 +119,18 @@ function DeleteDatabaseCtrl($scope, $mdDialog, toaster, DbService,database) {
 
   $scope.delete = function() {
     
+    var msg = 'Deleting database ' + database,
+        key = 'delete-db-' + database;
+
+    $rootScope.$broadcast('notification',{'msg' : msg,'key' : key,'complete': false});
     DbService.delete($scope.db)
       .then(function(result) {
         $mdDialog.hide();
-        $scope.successPopup();
       },function() {
         console.log("error");
-        $scope.failPopup()
       });
     
-  }
-
-  $scope.successPopup = function(){
-    toaster.pop({
-      type: 'success',
-      body: 'Database has been deleted',
-    });
   };
 
-  $scope.failPopup = function() {
-    toaster.pop({
-      type: 'error',
-      body: 'Problem while deleting database',
-    });
-  }
 
 }

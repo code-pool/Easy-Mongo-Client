@@ -5,6 +5,7 @@ function storageService(){
 
   var service = {};
   service.store = store;
+  service.set = store;
   service.clear = clear;
   service.remove = remove;
   service.get = get;

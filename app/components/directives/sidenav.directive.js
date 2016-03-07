@@ -2,9 +2,9 @@
 
 angular
     .module('directives')
-    .directive('sideNav', ['$mdSidenav','$rootScope','notificationService', SideNav]);
+    .directive('sideNav', ['$mdSidenav','$rootScope','notificationService','storageService', SideNav]);
    
-function SideNav($mdSidenav,$rootScope,notificationService) {
+function SideNav($mdSidenav,$rootScope,notificationService,storageService) {
     return {
         restrict: 'EA',
         templateUrl: 'app/components/partials/side-nav.partial.html',
@@ -12,9 +12,36 @@ function SideNav($mdSidenav,$rootScope,notificationService) {
     };
 
     function linkFunc($scope, $elem, $attr) {
+
+      $scope.notifications = notificationService.list();
+      $scope.toggleRight = buildToggler('left');
       
+      $scope.isOpenRight = function(){
+        return $mdSidenav('left').isOpen();
+      };
+
+      $scope.close = function () {
+        $mdSidenav('left').close();
+      };
+
       $scope.onAddClick = function(){
         $scope.$eval($attr.addClickMethod);
+      };
+
+      $scope.removeNotf = function(key){
+        
+        var notifications = notificationService.list(),
+            len = notifications.length;
+        
+        while(len--){
+          if(key == notifications[len].key) {
+            notifications.splice(len,1);
+            break;
+          }
+        }
+
+        $scope.notifications = notifications;
+        storageService.set('notifications',JSON.stringify($scope.notifications));
       };
 
       $rootScope.$watch('login',function(newVal){
@@ -26,19 +53,27 @@ function SideNav($mdSidenav,$rootScope,notificationService) {
         }
         
         $scope.hide = false;
-      })
+      });
 
-      $scope.toggleRight = buildToggler('left');
-      
-      $scope.isOpenRight = function(){
-        return $mdSidenav('left').isOpen();
-      };
+      $scope.$on('notification',function(event,data){
+        $scope.notifications.push(data);
+        storageService.set('notifications',JSON.stringify($scope.notifications));
+      });
 
-      $scope.close = function () {
-        $mdSidenav('left').close();
-      };
+      $scope.$on('notification-complete',function(event,key){
+        var notifications = notificationService.list(),
+            len = notifications.length;
+        while(len--){
+          if(key == notifications[len].key) {
+            notifications[len].complete = true;
+            break;
+          }
+        }
+        $scope.notifications = notifications;
+        storageService.set('notifications',JSON.stringify($scope.notifications));
+        $scope.$apply();
+      });
 
-      // $scope.notifications = [{'msg' : 'Something is going on...'},{'msg' : 'Again...'}]
 
       function buildToggler(navID) {
         return function() {

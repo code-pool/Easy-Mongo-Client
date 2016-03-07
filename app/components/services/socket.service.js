@@ -25,6 +25,7 @@ function socketFactory(config,storageService,$rootScope) {
   };
 
   function AttachListener() {
+
     connection.on('db-info',function(data){
       $rootScope.$broadcast('db-info',data);
     });
@@ -37,8 +38,9 @@ function socketFactory(config,storageService,$rootScope) {
       $rootScope.$broadcast('db-create',data);
     });
 
-    connection.on('db-delete',function(data){
-      $rootScope.$broadcast('db-delete',data);
+    connection.on('db-delete',function(db_name){
+      $rootScope.$broadcast('db-delete',db_name);
+      $rootScope.$broadcast('notification-complete',('delete-db-' + db_name));
     });
 
     connection.on('collection-delete',function(data){
