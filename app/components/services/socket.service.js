@@ -38,13 +38,14 @@ function socketFactory(config,storageService,$rootScope) {
       $rootScope.$broadcast('db-create',data);
     });
 
-    connection.on('db-delete',function(db_name){
-      $rootScope.$broadcast('db-delete',db_name);
-      $rootScope.$broadcast('notification-complete',('delete-db-' + db_name));
+    connection.on('db-delete',function(data){
+      $rootScope.$broadcast('db-delete',data);
+      $rootScope.$broadcast('notification-complete',('delete-db-' + data.database));
     });
 
     connection.on('collection-delete',function(data){
       $rootScope.$broadcast('collection-delete',data);
+      $rootScope.$broadcast('notification-complete',('delete-collection-' + data.collection));
     });
   };
 

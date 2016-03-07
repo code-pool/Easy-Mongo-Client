@@ -58,8 +58,8 @@ function DashboardCtrl($scope, $mdDialog, databases, socket, $state) {
 
   };
 
-  $scope.$on('db-delete',function(event,db_name){
-    var index = _.findIndex(databases,{'db_name' : db_name});
+  $scope.$on('db-delete',function(event,data){
+    var index = _.findIndex(databases,{'db_name' : data.database});
     $scope.databases.splice(index,1);
     $scope.$apply();
   });
