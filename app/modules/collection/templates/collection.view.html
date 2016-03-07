@@ -24,7 +24,7 @@
           <ul class="buckets layout-wrap layout-align-center-center layout-row" layout="" layout-align="center center" layout-wrap="">
             <li flex="50" flex-gt-md="50" ng-repeat="colval in col.stats"
              class="ng-scope flex-gt-md-50 flex-50">
-                  <a class="md-primary md-raised md-button md-ink-ripple" ng-click="viewDocs($index)">
+                  <a class="md-primary md-raised md-button md-ink-ripple" ng-click="viewDocs($parent.$index)">
                     {{colval.val}}
                   <md-icon>{{colval.icon}}</md-icon>
                   </span><div class="md-ripple-container"></div></a>
