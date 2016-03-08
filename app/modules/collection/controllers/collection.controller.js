@@ -2,10 +2,10 @@
 
 angular
  .module('collection')
- .controller('CollectionCtrl', ['$scope', '$mdDialog','collections', 'socket', 'CollectionService', '$stateParams','$state','$rootScope', CollectionCtrl])
+ .controller('CollectionCtrl', ['$scope', '$mdDialog','collections', 'socket', 'CollectionService', '$stateParams','$state','$rootScope','navigationService', CollectionCtrl])
  .controller('DocumentsCtrl',['$scope','documents','$stateParams','_',DocumentsCtrl]);
 
-function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionService, $stateParams,$state,$rootScope) {
+function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionService, $stateParams,$state,$rootScope,navigationService) {
 
   socket.reqDbInfo();
   $scope.collections = collections;
@@ -25,7 +25,7 @@ function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionServic
 
   $scope.$on('collection-info',function(event,data){
     var index = _.findIndex(collections,{'collection_name' : data.collection});
-    delete data.collection;
+    
     $scope.collections[index].stats = {
       count : {
         val : (data.count),
@@ -38,6 +38,9 @@ function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionServic
       }
     };
     $scope.$apply();
+    var value = data.collection + ' (' + $stateParams.database + ')';
+    navigationService.set({'state' : 'home.collection.documents','value' : value,'icon' : 'view_headline','params': {'database' : $stateParams.database,'collection' : data.collection}});
+    delete data.collection;
   });
 
   $scope.$on('collection-delete',function(event,data){
@@ -57,7 +60,7 @@ function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionServic
 
       var msg = 'Deleting collection ' + colName,
         key = 'delete-collection-' + colName;
-
+      navigationService.remove('home.collection.documents',{'database':$stateParams.database,'collection' : colName});
       $rootScope.$broadcast('notification',{'msg' : msg,'key' : key,'complete': false});
       CollectionService.delete($stateParams.database, colName);
 

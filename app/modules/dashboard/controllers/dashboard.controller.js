@@ -16,7 +16,7 @@ function DashboardCtrl($scope, $mdDialog, databases, socket, $state,navigationSe
   };
 
   navigationService.set({'state' : 'home','value' : 'home','icon' : 'home'});
-  navigationService.set({'state' : 'login','value' : 'login','icon' : 'https'});
+  navigationService.set({'state' : 'login','value' : 'logout','icon' : 'https'});
 
   $scope.$on('db-info',function(event,data){
     
