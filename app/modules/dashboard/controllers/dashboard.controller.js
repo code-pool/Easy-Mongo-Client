@@ -124,10 +124,12 @@ function DeleteDatabaseCtrl($scope, $mdDialog, toaster, DbService,database,$root
   $scope.delete = function() {
     
     var msg = 'Deleting database ' + database,
+        finished = 'Deleted database ' + database,
         key = 'delete-database-' + database;
 
-    $rootScope.$broadcast('notification',{'msg' : msg,'key' : key,'complete': false});
     navigationService.remove('home.collection',{'database':database});
+    $rootScope.$broadcast('notification',{'msg' : msg,'key' : key,'complete': false,'finished' : finished});
+
     DbService.delete($scope.db)
       .then(function(result) {
         $mdDialog.hide();

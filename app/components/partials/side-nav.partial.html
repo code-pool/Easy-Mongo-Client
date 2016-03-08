@@ -25,7 +25,7 @@
           <div class="md-list-item-text" layout="column" layout-align="space-around">
             <div layout="row">
               <h4>{{notf.msg}}
-                <md-icon ng-if="notf.complete" ng-click="removeNotf(notf.key)">delete</md-icon>
+                <md-icon ng-if="notf.complete" ng-click="removeNotf(notf.key)">check_circle</md-icon>
               </h4>
               <div ng-if="!notf.complete" style="margin-top:10px;">
                 <md-progress-circular class="md-hue-2" md-diameter="30px"></md-progress-circular>

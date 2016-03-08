@@ -66,6 +66,7 @@ function SideNav($mdSidenav,$rootScope,notificationService,storageService) {
         while(len--){
           if(key == notifications[len].key) {
             notifications[len].complete = true;
+            notifications[len].msg = notifications[len].finished || notifications[len].msg;
             break;
           }
         }

@@ -59,9 +59,12 @@ function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionServic
     $mdDialog.show(confirm).then(function() {
 
       var msg = 'Deleting collection ' + colName,
-        key = 'delete-collection-' + colName;
+        key = 'delete-collection-' + colName,
+        finished = 'Deleted collection ' + colName;
+
       navigationService.remove('home.collection.documents',{'database':$stateParams.database,'collection' : colName});
-      $rootScope.$broadcast('notification',{'msg' : msg,'key' : key,'complete': false});
+      $rootScope.$broadcast('notification',{'msg' : msg,'key' : key,'complete': false,'finished' : finished});
+      
       CollectionService.delete($stateParams.database, colName);
 
     }, function() {
