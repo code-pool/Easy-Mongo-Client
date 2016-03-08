@@ -9,7 +9,8 @@ function DbService($state, _,$http,config,$q) {
     return {
       list : List,
       create : Create,
-      delete : Delete
+      delete : Delete,
+      download : Download
     }
     
     function List(user) {
@@ -42,6 +43,18 @@ function DbService($state, _,$http,config,$q) {
       var defer = $q.defer();
       var url = config.apiEndPoint + '/';
       $http.post(url,{'database' : db_name}).then(function(response){
+        defer.resolve();
+      },function(err){
+        defer.reject(err);
+      });
+
+      return defer.promise;
+    }
+
+    function Download(db_name){
+      var defer = $q.defer();
+      var url = config.apiEndPoint + '/database/zip/' + db_name;
+      $http.get(url).then(function(response){
         defer.resolve();
       },function(err){
         defer.reject(err);

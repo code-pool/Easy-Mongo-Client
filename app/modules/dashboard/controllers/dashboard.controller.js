@@ -2,11 +2,11 @@
 
 angular
  .module('dashboard')
- .controller('DashboardCtrl', ['$scope', '$mdDialog','databases', 'socket','$state','navigationService', DashboardCtrl])
+ .controller('DashboardCtrl', ['$scope', '$mdDialog','databases', 'socket','$state','navigationService','config','DbService', DashboardCtrl])
  .controller('CreateDatabaseCtrl', ['$scope', '$mdDialog', 'toaster', 'DbService', CreateDatabaseCtrl])
  .controller('DeleteDatabaseCtrl', ['$scope', '$mdDialog', 'toaster', 'DbService','$rootScope','navigationService', DeleteDatabaseCtrl]);
 
-function DashboardCtrl($scope, $mdDialog, databases, socket, $state,navigationService) {
+function DashboardCtrl($scope, $mdDialog, databases, socket, $state,navigationService, config,DbService) {
 
   socket.reqDbInfo();
   $scope.databases = databases;
@@ -45,6 +45,21 @@ function DashboardCtrl($scope, $mdDialog, databases, socket, $state,navigationSe
   $scope.viewCollections = function(index) {
     var database = $scope.databases[index].database;
     $state.go('home.collection',{'database' : database});
+  };
+
+  $scope.download = function(database){
+
+    var url = config.apiEndPoint + '/dump',
+        win = window.open(url, "_blank");
+
+    DbService.download(database).then(function(){
+      url = config.apiEndPoint + '/database/download/' + database;
+      win.location.assign(url);
+      setTimeout(function(){
+        win.close();
+      },1000);
+    });
+
   };
 
   $scope.$on('db-create',function(event,data){
