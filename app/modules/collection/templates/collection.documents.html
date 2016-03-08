@@ -1,25 +1,50 @@
 
-<md-toolbar class="md-table-toolbar md-default">
-  <div class="md-toolbar-tools">
-    <span>{{collection_name}}</span>
-  </div>
-</md-toolbar>
+    
+    <side-nav add-click-method="showDailogForDb()"></side-nav>
+    <md-content laout="column" flex>
+      
+<!--       <md-card>
+        <div layout="row" layout-wrap class="checkboxes">
+          <md-checkbox ng-model="options.autoSelect">Auto Row Select</md-checkbox>
+          <md-checkbox ng-model="options.largeEditDialog">Lard Edit Dialogs</md-checkbox>
+          <md-checkbox ng-model="options.rowSelection">Row Selection</md-checkbox>
+          <md-checkbox ng-model="options.boundaryLinks">Pagination Boundary Links</md-checkbox>
+          <md-checkbox ng-model="options.pageSelector">Pagination Page Selector</md-checkbox>
+        </div>
+      </md-card> -->
+      
+      <md-card>
+        
+        <md-toolbar class="md-table-toolbar md-default" 
+        ng-hide="options.rowSelection && selected.length">
+          <div class="md-toolbar-tools">
+            <span>{{collection_name}}</span>
+            <div flex></div>
+            <md-button ng-click="loadStuff()">Async Operation</md-button>
+          </div>
+        </md-toolbar>
+        
+        <md-toolbar class="md-table-toolbar alternate" ng-show="options.rowSelection && selected.length">
+          <div class="md-toolbar-tools">
+            <span>{{selected.length}} {{selected.length > 1 ? 'items' : 'item'}} selected</span>
+          </div>
+        </md-toolbar>
+        
+        <md-table-container>
+          <table md-table md-row-select="options.rowSelection" ng-model="selected" md-progress="promise">
+            <thead md-head md-order="query.order" md-on-reorder="logOrder">
+              <tr md-row>
+                <th ng-repeat="key in keys" md-column md-order-by="{{key}}"><span>{{key}}</span></th>
+              </tr>
+            </thead>
+            <tbody md-body>
+              <tr md-row md-select="row" md-auto-select="options.autoSelect" ng-disabled="dessert.calories.value > 400" ng-repeat="row in rows | filter: filter.search | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit">
+                <td md-cell ng-repeat="key in keys">{{row[key]}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </md-table-container>
 
-<md-table-container>
-  <table md-table md-row-select ng-model="selected" md-progress="promise">
-    <thead md-head md-order="query.order" md-on-reorder="onReorder">
-      <tr md-row>
-        <th md-column md-numeric ng-repeat="key in keys">{{key}}</th>
-      </tr>
-    </thead>
-    <tbody md-body>
-      <tr md-row md-auto-select ng-repeat="row in rows">
-        <td md-cell ng-repeat="key in keys" ng-bind="row[key]"></td>
-      </tr>
-    </tbody>
-  </table>
-</md-table-container>
-
-<md-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{desserts.count}}" md-on-paginate="onPaginate" md-page-select></md-table-pagination>
-
-<add-action call-ctrl-method="addCollection()"></add-action>
+        <md-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{rows.length}}" md-page-select="options.pageSelector" md-boundary-links="options.boundaryLinks" md-on-paginate="logPagination"></md-table-pagination>
+      </md-card>
+    </md-content>
