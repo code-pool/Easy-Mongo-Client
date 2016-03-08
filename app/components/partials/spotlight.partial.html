@@ -1,0 +1,32 @@
+<div layout="column" ng-cloak class="md-inline-form" style="position:fixed;top:50%;z-index:100; left:20%; right:20%;" ng-show="__spotLightActive">
+  <md-whiteframe class="md-whiteframe-24dp" flex="100">
+    <md-content layout-padding>
+      <div>
+
+        <md-autocomplete
+            md-selected-item="selectedItem"
+            md-no-cache="true"
+            md-search-text="searchText"
+            md-items="item in querySearch(searchText)"
+            md-item-text="item.value"
+            md-min-length="0"
+            md-selected-item-change="redirect(selectedItem.state,selectedItem.params)"
+            md-menu-class="autocomplete-custom-template"
+            placeholder="Enter location to navigate.">
+          <md-item-template>
+            <span>
+              <md-icon>{{item.icon}}</md-icon>
+              {{item.value | titleCase}}
+            </span>
+          </md-item-template>
+          <md-not-found>
+            No route matching "{{searchText}}" were found.
+          </md-not-found>
+        </md-autocomplete>
+
+        </form>
+      </div>
+    </md-content>
+  </md-whiteframe>
+</div>
+

@@ -2,11 +2,11 @@
 
 angular
  .module('dashboard')
- .controller('DashboardCtrl', ['$scope', '$mdDialog','databases', 'socket','$state', DashboardCtrl])
+ .controller('DashboardCtrl', ['$scope', '$mdDialog','databases', 'socket','$state','navigationService', DashboardCtrl])
  .controller('CreateDatabaseCtrl', ['$scope', '$mdDialog', 'toaster', 'DbService', CreateDatabaseCtrl])
- .controller('DeleteDatabaseCtrl', ['$scope', '$mdDialog', 'toaster', 'DbService','$rootScope', DeleteDatabaseCtrl]);
+ .controller('DeleteDatabaseCtrl', ['$scope', '$mdDialog', 'toaster', 'DbService','$rootScope','navigationService', DeleteDatabaseCtrl]);
 
-function DashboardCtrl($scope, $mdDialog, databases, socket, $state) {
+function DashboardCtrl($scope, $mdDialog, databases, socket, $state,navigationService) {
 
   socket.reqDbInfo();
   $scope.databases = databases;
@@ -14,6 +14,9 @@ function DashboardCtrl($scope, $mdDialog, databases, socket, $state) {
   $scope.toggleDbSelect = function(db) {
     db.selected = !db.selected;
   };
+
+  navigationService.set({'state' : 'home','value' : 'home','icon' : 'home'});
+  navigationService.set({'state' : 'login','value' : 'login','icon' : 'https'});
 
   $scope.$on('db-info',function(event,data){
     
@@ -35,6 +38,7 @@ function DashboardCtrl($scope, $mdDialog, databases, socket, $state) {
     };
 
     $scope.$apply();
+    navigationService.set({'state' : 'home.collection','value' : data.database,'icon' : 'view_stream','params': {'database' : data.database}});
 
   });
 
@@ -107,7 +111,7 @@ function CreateDatabaseCtrl($scope, $mdDialog, toaster, DbService) {
 
 }
 
-function DeleteDatabaseCtrl($scope, $mdDialog, toaster, DbService,database,$rootScope) {
+function DeleteDatabaseCtrl($scope, $mdDialog, toaster, DbService,database,$rootScope,navigationService) {
   
   $scope.db = {
     'name' : database
@@ -120,9 +124,10 @@ function DeleteDatabaseCtrl($scope, $mdDialog, toaster, DbService,database,$root
   $scope.delete = function() {
     
     var msg = 'Deleting database ' + database,
-        key = 'delete-db-' + database;
+        key = 'delete-database-' + database;
 
     $rootScope.$broadcast('notification',{'msg' : msg,'key' : key,'complete': false});
+    navigationService.remove('home.collection',{'database':database});
     DbService.delete($scope.db)
       .then(function(result) {
         $mdDialog.hide();
