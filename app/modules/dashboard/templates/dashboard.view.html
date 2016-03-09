@@ -2,14 +2,15 @@
 <md-content flex="100">
   <div class="col-sm-4 col-lg-4" ng-repeat="db in databases">
     
-    <md-toolbar>
+    <md-toolbar style="border-top-left-radius:4px; border-top-right-radius:4px;">
       <div class="md-toolbar-tools">
         <h4>{{db.database}}</h4>
         <span flex></span>
       </div>
     </md-toolbar>
 
-    <div class="panel panel-default bootcards-summary">
+    <div class="panel panel-default bootcards-summary" 
+        style="border-top-left-radius:0px; border-top-right-radius:0px; margin-top:-1px;">
       <div class="panel-body">
         
       <div>
