@@ -35,6 +35,10 @@ function SpotLight($state,navigationService){
         
     body.onkeydown = function (e) {
 
+      if($state.current.name == 'login') {
+        return;
+      }
+      
       if(previous == 17 && e.keyCode == 32) {
         $scope.__spotLightActive = true;
         e.preventDefault();
