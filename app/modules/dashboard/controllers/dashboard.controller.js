@@ -3,8 +3,8 @@
 angular
  .module('dashboard')
  .controller('DashboardCtrl', ['$scope', '$mdDialog','databases', 'socket','$state','navigationService','config','DbService', DashboardCtrl])
- .controller('CreateDatabaseCtrl', ['$scope', '$mdDialog', 'toaster', 'DbService', CreateDatabaseCtrl])
- .controller('DeleteDatabaseCtrl', ['$scope', '$mdDialog', 'toaster', 'DbService','$rootScope','navigationService', DeleteDatabaseCtrl]);
+ .controller('CreateDatabaseCtrl', ['$scope', '$mdDialog', 'DbService', CreateDatabaseCtrl])
+ .controller('DeleteDatabaseCtrl', ['$scope', '$mdDialog', 'DbService','$rootScope','navigationService', DeleteDatabaseCtrl]);
 
 function DashboardCtrl($scope, $mdDialog, databases, socket, $state,navigationService, config,DbService) {
 
@@ -102,7 +102,7 @@ function DashboardCtrl($scope, $mdDialog, databases, socket, $state,navigationSe
   }
 }
 
-function CreateDatabaseCtrl($scope, $mdDialog, toaster, DbService) {
+function CreateDatabaseCtrl($scope, $mdDialog, DbService) {
 
   $scope.cancel = function() {
     $mdDialog.cancel();
@@ -112,21 +112,12 @@ function CreateDatabaseCtrl($scope, $mdDialog, toaster, DbService) {
   $scope.create = function() {
     DbService.create($scope.dbname).then(function(){
       $mdDialog.hide($scope.dbName);
-      $scope.successPopup();      
-    });
-  }
-
-  $scope.successPopup = function(){
-    toaster.pop({
-      type: 'success',
-      title: 'Congrats',
-      body: 'Database has been created',
     });
   };
 
 }
 
-function DeleteDatabaseCtrl($scope, $mdDialog, toaster, DbService,database,$rootScope,navigationService) {
+function DeleteDatabaseCtrl($scope, $mdDialog, DbService,database,$rootScope,navigationService) {
   
   $scope.db = {
     'name' : database

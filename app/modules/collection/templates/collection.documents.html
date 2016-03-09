@@ -25,8 +25,13 @@
         </md-toolbar>
         
         <md-toolbar class="md-table-toolbar alternate" ng-show="options.rowSelection && selected.length">
-          <div class="md-toolbar-tools">
+          <div class="md-toolbar-tools" layout="row">
             <span>{{selected.length}} {{selected.length > 1 ? 'items' : 'item'}} selected</span>
+            <div layout="row" layout-align="end end">
+              <md-button class="md-fab md-warn md-raised md-hue-2 md-mini" ng-click="deleteCollection(col.collection_name)" aria-label="Delete">
+                  <md-icon>delete</md-icon>
+              </md-button>
+          </div>
           </div>
         </md-toolbar>
         

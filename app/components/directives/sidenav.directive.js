@@ -2,7 +2,8 @@
 
 angular
     .module('directives')
-    .directive('sideNav', ['$mdSidenav','$rootScope','notificationService','storageService', SideNav]);
+    .directive('sideNav', ['$mdSidenav','$rootScope','notificationService','storageService',SideNav])
+    .directive('alertPopup', ['$mdToast',alertPopup]);
    
 function SideNav($mdSidenav,$rootScope,notificationService,storageService) {
     return {
@@ -61,12 +62,19 @@ function SideNav($mdSidenav,$rootScope,notificationService,storageService) {
       });
 
       $scope.$on('notification-complete',function(event,key){
+
         var notifications = notificationService.list(),
-            len = notifications.length;
+            len = notifications.length,
+            msg;
+
         while(len--){
           if(key == notifications[len].key) {
-            notifications[len].complete = true;
-            notifications[len].msg = notifications[len].finished || notifications[len].msg;
+            msg = notifications[len].finished || notifications[len].msg;
+            if(!notifications[len].complete) {
+              notifications[len].complete = true;  
+              notificationService.emit(msg);
+            }
+            notifications[len].msg = notifications[len].finished || notifications[len].msg;            
             break;
           }
         }
@@ -81,5 +89,21 @@ function SideNav($mdSidenav,$rootScope,notificationService,storageService) {
           $mdSidenav(navID).toggle();
         }
       }
+    }
+}
+
+//TODO move this to separate file
+function alertPopup($mdToast) {
+
+    return {
+        restrict: 'E',
+        link : linkFunc
+    };
+
+    function linkFunc($scope,$elem,$attrs){
+      $scope.$on('alert',function(event,msg){
+        var toast = $mdToast.simple().textContent(msg).position('top right');
+        $mdToast.show(toast);
+      });
     }
 }

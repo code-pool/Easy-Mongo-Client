@@ -226,9 +226,10 @@ function CreateCollectionCtrl($scope,$mdDialog,collections,_,CollectionService,$
     }
 
     var msg = 'Creating collection ' + $scope.schema.collection,
+        finished = 'Created collection ' + $scope.schema.collection,
         key = 'create-collection-' + $scope.schema.collection;
 
-    $rootScope.$broadcast('notification',{'msg' : msg,'key' : key,'complete': false});
+    $rootScope.$broadcast('notification',{'msg' : msg,'key' : key,'complete': false, finished : finished});
 
     CollectionService.add($stateParams.database,$scope.schema).then(function(){
       $mdDialog.hide($scope.schema.collection);

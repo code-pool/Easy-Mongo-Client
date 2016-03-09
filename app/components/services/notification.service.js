@@ -1,12 +1,13 @@
 angular.module('services')
-     .service('notificationService',['config','$http','$state','storageService',NotificationService]);
+     .service('notificationService',['config','$http','$state','storageService','$rootScope',NotificationService]);
 
-function NotificationService(config,$http,$state,storageService) {
+function NotificationService(config,$http,$state,storageService,$rootScope) {
 
   var service = {};
   service.list = list;
   service.set = set;
   service.remove = remove;
+  service.emit = emit;
   return service;
 
   function list(){
@@ -33,6 +34,10 @@ function NotificationService(config,$http,$state,storageService) {
     var items = list();
     items.push({key : key,msg:msg});
     storageService.set('notifications',JSON.stringify(items));
+  }
+
+  function emit(msg) {
+    $rootScope.$broadcast('alert',msg);
   }
 
 }
