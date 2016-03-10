@@ -3,7 +3,7 @@
 angular
  .module('dashboard')
  .controller('DashboardCtrl', ['$scope', '$mdDialog','databases', 'socket','$state','navigationService','config','DbService', DashboardCtrl])
- .controller('CreateDatabaseCtrl', ['$scope', '$mdDialog', 'DbService', CreateDatabaseCtrl])
+ .controller('CreateDatabaseCtrl', ['$scope', '$mdDialog', 'DbService','$rootScope', CreateDatabaseCtrl])
  .controller('DeleteDatabaseCtrl', ['$scope', '$mdDialog', 'DbService','$rootScope','navigationService', DeleteDatabaseCtrl]);
 
 function DashboardCtrl($scope, $mdDialog, databases, socket, $state,navigationService, config,DbService) {
@@ -71,8 +71,7 @@ function DashboardCtrl($scope, $mdDialog, databases, socket, $state,navigationSe
     $mdDialog.show({
       controller: CreateDatabaseCtrl,
       templateUrl: 'app/modules/dashboard/templates/createdb.view.html',
-      parent: angular.element(document.body),
-      clickOutsideToClose:true
+      parent: angular.element(document.body)
     });
 
   };
@@ -93,25 +92,29 @@ function DashboardCtrl($scope, $mdDialog, databases, socket, $state,navigationSe
         database : function(){
           return dbName;
         }
-      },
-      clickOutsideToClose:true
+      }
     }).then(function(){
     },function(err){
       console.log(err);
     })
-  }
+  };
 }
 
-function CreateDatabaseCtrl($scope, $mdDialog, DbService) {
+function CreateDatabaseCtrl($scope, $mdDialog, DbService,$rootScope) {
 
   $scope.cancel = function() {
     $mdDialog.cancel();
   };
 
-
   $scope.create = function() {
+
+    var msg = 'Creating database ' + $scope.dbname,
+        finished = 'Created database ' + $scope.dbname,
+        key = 'create-database-' + $scope.dbname;
+
+    $rootScope.$broadcast('notification',{'msg' : msg,'key' : key,'complete': false,'finished' : finished});
     DbService.create($scope.dbname).then(function(){
-      $mdDialog.hide($scope.dbName);
+      $mdDialog.hide($scope.dbname);
     });
   };
 
