@@ -1242,3 +1242,8 @@ table.md-api-table  tr  td:first-child {
     background-color: rgba(156, 204, 101,0.4);
     padding: 20px;
 }
+.easy-client {
+  background-image: url('../images/logo.png');
+  height:95px;
+  width:200px;
+}
