@@ -25,7 +25,8 @@ function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionServic
 
   $scope.$on('collection-info',function(event,data){
     var index = _.findIndex(collections,{'collection_name' : data.collection});
-    
+
+    $scope.collections[index].processing = false;
     $scope.collections[index].stats = {
       count : {
         val : (data.count),
@@ -48,7 +49,7 @@ function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionServic
     $scope.collections.splice(index,1);
   });
 
-  $scope.deleteCollection = function(colName) {
+  $scope.deleteCollection = function(colName,index) {
 
     var confirm = $mdDialog.confirm()
         .title('Would you like to delete your Collection?')
@@ -64,6 +65,7 @@ function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionServic
 
       navigationService.remove('home.collection.documents',{'database':$stateParams.database,'collection' : colName});
       $rootScope.$broadcast('notification',{'msg' : msg,'key' : key,'complete': false,'finished' : finished});
+      $scope.collections[index].processing = true;
 
       CollectionService.delete($stateParams.database, colName);
 
@@ -84,7 +86,7 @@ function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionServic
       parent: angular.element(document.body),
       clickOutsideToClose:false
     }).then(function(col_name){
-      collections.push({'collection_name' : col_name,'stats' : {}});
+      collections.push({'collection_name' : col_name,'stats' : {},'processing' : true});
       $scope.collections = collections;
     })
   };
