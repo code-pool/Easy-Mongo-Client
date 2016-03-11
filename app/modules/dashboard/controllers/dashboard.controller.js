@@ -27,7 +27,7 @@ function DashboardCtrl($scope, $mdDialog, databases, socket, $state,navigationSe
     $scope.databases[index].stats = {
       count : {
         val : (data.collections),
-        icon : 'assignment'
+        icon : 'view_headline'
       },
       size : {
         val : data.size,

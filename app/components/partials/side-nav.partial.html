@@ -23,11 +23,11 @@
       <md-list>
         <md-list-item class="md-1-line" ng-repeat="notf in notifications track by $index">
           <div class="md-list-item-text" layout="column" layout-align="space-around">
-            <div layout="row">
+            <div layout="row" layout-align="center center">
               <h4>{{notf.msg}}
                 <md-icon ng-if="notf.complete" ng-click="removeNotf(notf.key)">check_circle</md-icon>
               </h4>
-              <div ng-if="!notf.complete" style="margin-top:10px;">
+              <div ng-if="!notf.complete">
                 <md-progress-circular class="md-hue-2" md-diameter="30px"></md-progress-circular>
               </div>
             </div>
