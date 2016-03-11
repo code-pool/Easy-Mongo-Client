@@ -3,7 +3,7 @@
 angular
  .module('dashboard')
  .controller('DashboardCtrl', ['$scope', '$mdDialog','databases', 'socket','$state','navigationService','config','DbService', DashboardCtrl])
- .controller('CreateDatabaseCtrl', ['$scope', '$mdDialog', 'DbService', CreateDatabaseCtrl])
+ .controller('CreateDatabaseCtrl', ['$scope', '$mdDialog', 'DbService','$rootScope', CreateDatabaseCtrl])
  .controller('DeleteDatabaseCtrl', ['$scope', '$mdDialog', 'DbService','$rootScope','navigationService', DeleteDatabaseCtrl]);
 
 function DashboardCtrl($scope, $mdDialog, databases, socket, $state,navigationService, config,DbService) {
@@ -23,6 +23,7 @@ function DashboardCtrl($scope, $mdDialog, databases, socket, $state,navigationSe
     var index = _.findIndex($scope.databases,{'database' : data.database});
     data.size = (data.size).toFixed(2) + ' mb';
 
+    $scope.databases[index].processing = false;
     $scope.databases[index].stats = {
       count : {
         val : (data.collections),
@@ -62,17 +63,15 @@ function DashboardCtrl($scope, $mdDialog, databases, socket, $state,navigationSe
 
   };
 
-  $scope.$on('db-create',function(event,data){
-    $scope.databases.push(data);
-  });
-
   $scope.showDailogForDb = function(ev) {
 
     $mdDialog.show({
       controller: CreateDatabaseCtrl,
       templateUrl: 'app/modules/dashboard/templates/createdb.view.html',
-      parent: angular.element(document.body),
-      clickOutsideToClose:true
+      parent: angular.element(document.body)
+    }).then(function(dbname){
+      databases.push({database : dbname,stats : {},processing : true});
+      $scope.databases = databases;
     });
 
   };
@@ -83,7 +82,8 @@ function DashboardCtrl($scope, $mdDialog, databases, socket, $state,navigationSe
     $scope.$apply();
   });
   
-  $scope.deleteDb = function(dbName) {
+  $scope.deleteDb = function(dbName,index) {
+
 
     $mdDialog.show({
       controller: DeleteDatabaseCtrl,
@@ -93,25 +93,30 @@ function DashboardCtrl($scope, $mdDialog, databases, socket, $state,navigationSe
         database : function(){
           return dbName;
         }
-      },
-      clickOutsideToClose:true
+      }
     }).then(function(){
+      $scope.databases[index].processing = true;
     },function(err){
       console.log(err);
     })
-  }
+  };
 }
 
-function CreateDatabaseCtrl($scope, $mdDialog, DbService) {
+function CreateDatabaseCtrl($scope, $mdDialog, DbService,$rootScope) {
 
   $scope.cancel = function() {
     $mdDialog.cancel();
   };
 
-
   $scope.create = function() {
+
+    var msg = 'Creating database ' + $scope.dbname,
+        finished = 'Created database ' + $scope.dbname,
+        key = 'create-database-' + $scope.dbname;
+
+    $rootScope.$broadcast('notification',{'msg' : msg,'key' : key,'complete': false,'finished' : finished});
     DbService.create($scope.dbname).then(function(){
-      $mdDialog.hide($scope.dbName);
+      $mdDialog.hide($scope.dbname);
     });
   };
 

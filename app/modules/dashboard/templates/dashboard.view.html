@@ -37,9 +37,11 @@
         </div>
       </div>
       </div>
+      <div ng-show="!db.processing" style="height:5px;"></div>
+      <md-progress-linear md-mode="indeterminate" ng-show="db.processing"></md-progress-linear>
 
       <div class="panel-footer">
-        <md-button class="md-fab md-warn md-raised md-hue-2 md-mini" ng-click="deleteDb(db.database)" aria-label="Delete">
+        <md-button class="md-fab md-warn md-raised md-hue-2 md-mini" ng-click="deleteDb(db.database,$index)" aria-label="Delete">
             <md-icon>delete</md-icon>
         </md-button>
         <md-button class="md-fab md-primary md-mini" ng-click="download(db.database)" aria-label="Download">

@@ -35,8 +35,11 @@
         </div>
       </div>
 
+      <div ng-show="!col.processing" style="height:5px;"></div>
+      <md-progress-linear md-mode="indeterminate" ng-show="col.processing"></md-progress-linear>
+
       <div class="panel-footer">
-        <md-button class="md-fab md-warn md-raised md-hue-2 md-mini" ng-click="deleteCollection(col.collection_name)" aria-label="Delete">
+        <md-button class="md-fab md-warn md-raised md-hue-2 md-mini" ng-click="deleteCollection(col.collection_name,$index)" aria-label="Delete">
             <md-icon>delete</md-icon>
         </md-button>
         <md-button class="md-fab md-primary md-mini" ng-click="download(col.collection_name)" aria-label="Download">
