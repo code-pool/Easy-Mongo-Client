@@ -23,6 +23,7 @@ function DashboardCtrl($scope, $mdDialog, databases, socket, $state,navigationSe
     var index = _.findIndex($scope.databases,{'database' : data.database});
     data.size = (data.size).toFixed(2) + ' mb';
 
+    $scope.databases[index].processing = false;
     $scope.databases[index].stats = {
       count : {
         val : (data.collections),
@@ -62,16 +63,15 @@ function DashboardCtrl($scope, $mdDialog, databases, socket, $state,navigationSe
 
   };
 
-  $scope.$on('db-create',function(event,data){
-    $scope.databases.push(data);
-  });
-
   $scope.showDailogForDb = function(ev) {
 
     $mdDialog.show({
       controller: CreateDatabaseCtrl,
       templateUrl: 'app/modules/dashboard/templates/createdb.view.html',
       parent: angular.element(document.body)
+    }).then(function(dbname){
+      databases.push({database : dbname,stats : {},processing : true});
+      $scope.databases = databases;
     });
 
   };
@@ -82,7 +82,8 @@ function DashboardCtrl($scope, $mdDialog, databases, socket, $state,navigationSe
     $scope.$apply();
   });
   
-  $scope.deleteDb = function(dbName) {
+  $scope.deleteDb = function(dbName,index) {
+
 
     $mdDialog.show({
       controller: DeleteDatabaseCtrl,
@@ -94,6 +95,7 @@ function DashboardCtrl($scope, $mdDialog, databases, socket, $state,navigationSe
         }
       }
     }).then(function(){
+      $scope.databases[index].processing = true;
     },function(err){
       console.log(err);
     })

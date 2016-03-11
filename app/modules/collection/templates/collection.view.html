@@ -35,6 +35,7 @@
         </div>
       </div>
 
+      <md-progress-linear md-mode="indeterminate" ng-show="!col.stats.count || col.processing"></md-progress-linear>
       <div class="panel-footer">
         <md-button class="md-fab md-warn md-raised md-hue-2 md-mini" ng-click="deleteCollection(col.collection_name)" aria-label="Delete">
             <md-icon>delete</md-icon>
