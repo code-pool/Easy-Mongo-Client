@@ -1,3 +1,3 @@
 # Easy-Mongo-Client
-Client for https://github.com/code-pool/Easy-Mongo
+Client for [Easy-Mongo](https://github.com/code-pool/Easy-Mongo)
 
