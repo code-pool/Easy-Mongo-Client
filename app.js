@@ -18,7 +18,8 @@ angular
   'providers',
   
   'login',
-  'dashboard',
+  'easymongo',
+  'database',
   'collection'
  
  ])

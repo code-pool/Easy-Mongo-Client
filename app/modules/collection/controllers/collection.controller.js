@@ -20,7 +20,7 @@ function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionServic
 
   $scope.viewDocs = function(index){
     var collection_name = $scope.collections[index].collection_name;
-    $state.go('home.collection.documents',{'database' : $stateParams.database,'collection': collection_name});
+    $state.go('easymongo.collection.documents',{'database' : $stateParams.database,'collection': collection_name});
   };
 
   $scope.$on('collection-info',function(event,data){
@@ -40,7 +40,7 @@ function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionServic
     };
     $scope.$apply();
     var value = data.collection + ' (' + $stateParams.database + ')';
-    navigationService.set({'state' : 'home.collection.documents','value' : value,'icon' : 'view_headline','params': {'database' : $stateParams.database,'collection' : data.collection}});
+    navigationService.set({'state' : 'easymongo.collection.documents','value' : value,'icon' : 'view_headline','params': {'database' : $stateParams.database,'collection' : data.collection}});
     delete data.collection;
   });
 
@@ -63,7 +63,7 @@ function CollectionCtrl($scope, $mdDialog, collections, socket, CollectionServic
         key = 'delete-collection-' + colName,
         finished = 'Deleted collection ' + colName;
 
-      navigationService.remove('home.collection.documents',{'database':$stateParams.database,'collection' : colName});
+      navigationService.remove('easymongo.collection.documents',{'database':$stateParams.database,'collection' : colName});
       $rootScope.$broadcast('notification',{'msg' : msg,'key' : key,'complete': false,'finished' : finished});
       $scope.collections[index].processing = true;
 

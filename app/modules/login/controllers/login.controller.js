@@ -16,7 +16,7 @@ function LoginCtrl($scope, $state, AuthService,storageService,socket,$rootScope)
         storageService.store('id',response.data.id);
         socket.initialize();
         $rootScope.login = false;
-        $state.go('home');
+        $state.go('easymongo.database');
       },function(err){
         console.log(err)
       });

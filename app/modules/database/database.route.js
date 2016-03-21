@@ -1,18 +1,18 @@
 'use strict';
 
 angular
- .module('dashboard')
+ .module('database')
  .config(['$stateProvider', stateProvider]);
  
  function stateProvider($stateProvider) {
 
 	$stateProvider
-		.state('home', {
-			url : '/home',
+		.state('easymongo.database',{
+			url : '/database',
 			views : {
-				'@' : {
-					controller : 'DashboardCtrl',
-					templateUrl : 'app/modules/dashboard/templates/dashboard.view.html',
+				'content' : {
+					controller : 'DatabaseCtrl',
+					templateUrl : 'app/modules/database/templates/database.view.html',
 					resolve : {
 
 						databases : function(DbService){

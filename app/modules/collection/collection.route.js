@@ -7,11 +7,11 @@ angular
  function stateProvider($stateProvider) {
 
   $stateProvider
-    .state('home.collection', {
+    .state('easymongo.collection', {
       url : '/{database}/collection',
-      parent: 'home',
+      parent: 'easymongo',
       views : {
-        '@' : {
+        'content' : {
           controller : 'CollectionCtrl',
           templateUrl : 'app/modules/collection/templates/collection.view.html',
           resolve : {
@@ -27,11 +27,11 @@ angular
         }
       }  
     })
-    .state('home.collection.documents', {
+    .state('easymongo.collection.documents', {
       url : '/{database}/{collection}/documents',
-      parent: 'home',
+      parent: 'easymongo',
       views : {
-        '@' : {
+        'content' : {
           controller : 'DocumentsCtrl',
           templateUrl : 'app/modules/collection/templates/collection.documents.html',
           resolve : { 

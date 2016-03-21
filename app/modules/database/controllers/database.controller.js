@@ -1,12 +1,12 @@
 'use strict';
 
 angular
- .module('dashboard')
- .controller('DashboardCtrl', ['$scope', '$mdDialog','databases', 'socket','$state','navigationService','config','DbService', DashboardCtrl])
+ .module('database')
+ .controller('DatabaseCtrl', ['$scope', '$mdDialog','databases', 'socket','$state','navigationService','config','DbService', DatabaseCtrl])
  .controller('CreateDatabaseCtrl', ['$scope', '$mdDialog', 'DbService','$rootScope', CreateDatabaseCtrl])
  .controller('DeleteDatabaseCtrl', ['$scope', '$mdDialog', 'DbService','$rootScope','navigationService', DeleteDatabaseCtrl]);
 
-function DashboardCtrl($scope, $mdDialog, databases, socket, $state,navigationService, config,DbService) {
+function DatabaseCtrl($scope, $mdDialog, databases, socket, $state,navigationService, config,DbService) {
 
   socket.reqDbInfo();
   $scope.databases = databases;
@@ -15,7 +15,7 @@ function DashboardCtrl($scope, $mdDialog, databases, socket, $state,navigationSe
     db.selected = !db.selected;
   };
 
-  navigationService.set({'state' : 'home','value' : 'home','icon' : 'home'});
+  navigationService.set({'state' : 'easymongo.database','value' : 'home','icon' : 'home'});
   navigationService.set({'state' : 'login','value' : 'logout','icon' : 'https'});
 
   $scope.$on('db-info',function(event,data){
@@ -39,13 +39,13 @@ function DashboardCtrl($scope, $mdDialog, databases, socket, $state,navigationSe
     };
 
     $scope.$apply();
-    navigationService.set({'state' : 'home.collection','value' : data.database,'icon' : 'view_stream','params': {'database' : data.database}});
+    navigationService.set({'state' : 'easymongo.collection','value' : data.database,'icon' : 'view_stream','params': {'database' : data.database}});
 
   });
 
   $scope.viewCollections = function(index) {
     var database = $scope.databases[index].database;
-    $state.go('home.collection',{'database' : database});
+    $state.go('easymongo.collection',{'database' : database});
   };
 
   $scope.download = function(database){
@@ -138,7 +138,7 @@ function DeleteDatabaseCtrl($scope, $mdDialog, DbService,database,$rootScope,nav
         finished = 'Deleted database ' + database,
         key = 'delete-database-' + database;
 
-    navigationService.remove('home.collection',{'database':database});
+    navigationService.remove('easymongo.collection',{'database':database});
     $rootScope.$broadcast('notification',{'msg' : msg,'key' : key,'complete': false,'finished' : finished});
 
     DbService.delete($scope.db)
