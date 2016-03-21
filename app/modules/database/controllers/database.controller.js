@@ -67,7 +67,7 @@ function DatabaseCtrl($scope, $mdDialog, databases, socket, $state,navigationSer
 
     $mdDialog.show({
       controller: CreateDatabaseCtrl,
-      templateUrl: 'app/modules/dashboard/templates/createdb.view.html',
+      templateUrl: 'app/modules/database/templates/createdb.view.html',
       parent: angular.element(document.body)
     }).then(function(dbname){
       databases.push({database : dbname,stats : {},processing : true});
@@ -87,7 +87,7 @@ function DatabaseCtrl($scope, $mdDialog, databases, socket, $state,navigationSer
 
     $mdDialog.show({
       controller: DeleteDatabaseCtrl,
-      templateUrl: 'app/modules/dashboard/templates/deletedb.view.html',
+      templateUrl: 'app/modules/database/templates/deletedb.view.html',
       parent: angular.element(document.body),
       resolve : {
         database : function(){
